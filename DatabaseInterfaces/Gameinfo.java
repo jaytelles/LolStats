@@ -15,6 +15,7 @@ public class Gameinfo extends Model {
     private int numTeammates;
     private String gotFirstBlood;
     private String gameOutcome;
+    private String description;
     
     
     public void setGameNumber(int gameNumber){
@@ -76,6 +77,11 @@ public class Gameinfo extends Model {
         this.gameOutcome = gameOutcome;
         this.set("GameOutcome",this.gameOutcome);
     }
+    
+    public void setDescription(String description){
+        this.description = description;
+        this.set("Description",this.description);
+    }
 
     public static LazyList<Gameinfo> getAllGameinfos(){
         return Gameinfo.where("id>=0");
@@ -127,5 +133,9 @@ public class Gameinfo extends Model {
     
     public String getGameOutcome(){
         return (String)this.get("gameOutcome");
+    }
+    
+    public String getDescription(){
+        return (String)this.get("Description");
     }
 }
