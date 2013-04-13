@@ -339,6 +339,11 @@ public class LolStats {
 		}
 	    }
 	    accepted = false;
+            
+            
+            System.out.print("Enter Description: ");
+            data = input.nextLine();
+            gameinfo.setDescription(data);
 
             gameinfo.setGameNumber(gameNumber);
 	    gameinfo.saveIt();
@@ -499,6 +504,10 @@ public class LolStats {
                 } else {
                     gameinfo.setGotFirstBlood("No");
                 }
+                
+                System.out.print("Enter Description: ");
+                data = input.nextLine();
+                gameinfo.setDescription(data);
                 
                 gameinfo.saveIt();
             }
