@@ -14,6 +14,7 @@ import org.apache.poi.ss.usermodel.Sheet;
 public abstract class Stats {
     protected int rowPosition;
     protected String playerName;
+    protected String username;
     protected ArrayList<Gameinfo> games;
    
     protected int writeStatsTotalRowColumnHeader(Sheet sh, int rowPosition, int cellPosition) throws IOException{
