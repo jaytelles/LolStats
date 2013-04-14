@@ -14,10 +14,11 @@ import org.apache.poi.ss.usermodel.Workbook;
 
 
 public class GeneralStats extends Stats{
-    public GeneralStats(String playerName) {
+    public GeneralStats(String playerName, String username) {
         rowPosition = 0;
         this.playerName = playerName;
-        this.games = RecordCruncher.filterPlayers(Gameinfo.getAllGameinfos(),playerName);
+        games = RecordCruncher.filterPlayers(Gameinfo.getAllGameinfos(), username);
+        games = RecordCruncher.filterPlayers(games,playerName);
     }
     
     public boolean doGeneralStats() throws IOException{
