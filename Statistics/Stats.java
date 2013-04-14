@@ -15,8 +15,7 @@ public abstract class Stats {
     protected int rowPosition;
     protected String playerName;
     protected ArrayList<Gameinfo> games;
-    
-    
+   
     protected int writeStatsTotalRowColumnHeader(Sheet sh, int rowPosition, int cellPosition) throws IOException{
             Row row = sh.createRow(rowPosition);
             Cell cell = row.createCell(cellPosition);
