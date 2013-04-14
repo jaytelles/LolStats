@@ -113,7 +113,7 @@ public class LolStats {
                             System.out.print("Enter PlayerName for general stats view: ");
                             playerName = input.nextLine();
                             if(containsName(players, playerName)){
-                                GeneralStats genStatsPage = new GeneralStats(playerName);
+                                GeneralStats genStatsPage = new GeneralStats(playerName, username);
                                 try{
                                     genStatsPage.doGeneralStats();
                                 }
