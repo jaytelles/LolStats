@@ -204,7 +204,6 @@ public class NumberCruncher {
             for(int k=games.size()-2; k>=0&&games.get(k).getGameOutcome().equals("No"); k--){
                 sum--;
             }
-            sum--;
             return sum;
             
         } else {

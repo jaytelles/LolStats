@@ -119,7 +119,8 @@ public abstract class Stats {
             return ++rowPosition;
         }
     
-    protected int doStatsRow(Sheet sh, ArrayList<Gameinfo> games, int rowPosition, int cellPosition, int totalSize, String rowHeader) throws IOException{
+    protected int doStatsRow(Sheet sh, ArrayList<Gameinfo> games, int rowPosition, int cellPosition, int totalSize, String rowHeader) throws IOException
+    {
             Row row = sh.createRow(rowPosition);
             double total, wins, losses, streak, kills, deaths, assists, lanesWon, timesFB;
            
