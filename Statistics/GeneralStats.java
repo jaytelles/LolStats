@@ -12,7 +12,6 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
-
 public class GeneralStats extends Stats{
     public GeneralStats(String playerName, String username) {
         rowPosition = 0;
@@ -25,7 +24,7 @@ public class GeneralStats extends Stats{
     public boolean doGeneralStats() throws IOException{
          Workbook wb = new HSSFWorkbook();
          Sheet sh = wb.createSheet("Sheet1");
-         FileOutputStream fos = new FileOutputStream(username + "'s stats for " + playerName+" general.xls");            
+         FileOutputStream fos = new FileOutputStream(username+"'s stats for "+playerName+" general.xls");            
 
          rowPosition = super.writeStatsTotalRowColumnHeader(sh,rowPosition, 0);
             
