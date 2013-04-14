@@ -25,7 +25,7 @@ public class GeneralStats extends Stats{
     public boolean doGeneralStats() throws IOException{
          Workbook wb = new HSSFWorkbook();
          Sheet sh = wb.createSheet("Sheet1");
-         FileOutputStream fos = new FileOutputStream(playerName+" general.xls");            
+         FileOutputStream fos = new FileOutputStream(username + "'s stats for " + playerName+" general.xls");            
 
          rowPosition = super.writeStatsTotalRowColumnHeader(sh,rowPosition, 0);
             

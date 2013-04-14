@@ -26,7 +26,7 @@ public class SpecificStats extends Stats{
             //this is meant to be a very detailed view
             Workbook wb = new HSSFWorkbook();
             Sheet sh = wb.createSheet("Sheet1");
-            FileOutputStream fos = new FileOutputStream(playerName+" specific.xls");            
+            FileOutputStream fos = new FileOutputStream(username + "'s stats for " + playerName+" specific.xls");            
 
             rowPosition = super.writeStatsTotalRowColumnHeader(sh,rowPosition, 0);
             
