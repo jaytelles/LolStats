@@ -13,10 +13,11 @@ import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 
 public class SpecificStats extends Stats{    
-    public SpecificStats(String playerName){
+    public SpecificStats(String playerName, String username){
         rowPosition = 0;
         this.playerName = playerName;
-        this.games = RecordCruncher.filterPlayers(Gameinfo.getAllGameinfos(),playerName);
+        games = RecordCruncher.filterUsers(Gameinfo.getAllGameinfos(), username);
+        this.games = RecordCruncher.filterPlayers(games,playerName);
     }
         
     public void doStatsForOnePlayer() throws IOException{
