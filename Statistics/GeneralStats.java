@@ -17,6 +17,7 @@ public class GeneralStats extends Stats{
     public GeneralStats(String playerName, String username) {
         rowPosition = 0;
         this.playerName = playerName;
+        this.username = username;
         games = RecordCruncher.filterPlayers(Gameinfo.getAllGameinfos(), username);
         games = RecordCruncher.filterPlayers(games,playerName);
     }
