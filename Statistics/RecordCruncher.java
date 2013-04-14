@@ -76,6 +76,17 @@ public class RecordCruncher{
         return filteredList;
     }
     
+    public static ArrayList<Gameinfo> filterSubmitters(ArrayList<Gameinfo> games, String submitter){
+         ArrayList<Gameinfo> filteredList = new ArrayList<>();
+         for(int k=0; k<games.size(); k++){
+             if(games.get(k).getSubmitterName().equals(submitter)){
+                 filteredList.add(games.get(k));
+             }
+         }
+         
+         return filteredList;
+    }
+    
     public static ArrayList<Gameinfo> removeSupports(ArrayList<Gameinfo> games){
         ArrayList<Gameinfo> filteredList = new ArrayList<>();
         for(int k=0; k<games.size(); k++){
