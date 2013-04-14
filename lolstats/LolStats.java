@@ -33,12 +33,13 @@ import org.apache.poi.ss.usermodel.*;
 
 public class LolStats {
     private static LazyList<Champs> champs;
-    private static LazyList<Players> players;
+    private static LazyList<Players> players = Players.getAllPlayers();
     
 	public static void main(String[] args) throws IOException {
-		Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/test", "root", "toor");
+		Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://lolstats.no-ip.org/test", "remoteuser", "remoteuserpassword");
                 
-                openingMenu();
+                String username = userLogin();
+                openingMenu(username);
                   
                 /*String playerName3 = "lolshoppip";
                 SpecificStats statsPage = new SpecificStats(playerName3);
@@ -52,8 +53,22 @@ public class LolStats {
                 Base.close();
 	}
         
-        public static void openingMenu(){
-            LazyList<Players> playerNames = Players.getAllPlayers();
+        public static String userLogin(){
+            Scanner input = new Scanner(System.in);
+            String username = "";
+            boolean accepted = false;
+
+            while(!accepted){
+                System.out.print("Enter your summoner name: ");
+                username = input.nextLine();
+                if(containsName(players,username)){
+                    accepted = true;
+                }
+            }
+            return username;
+        }
+        
+        public static void openingMenu(String username){
                 Scanner input = new Scanner(System.in);
                 String line;
                 boolean accepted = false;
@@ -70,13 +85,13 @@ public class LolStats {
                     line = input.nextLine();
                     
                     if(line.equals("1")){
-                        dataEntry();
+                        dataEntry(username);
                         accepted = true;
                     } else if (line.equals("2")){
                         while(!innerAccepted){
                             System.out.print("Enter PlayerName for detailed stats view: ");
                             playerName = input.nextLine();
-                            if(containsName(playerNames, playerName)){
+                            if(containsName(players, playerName)){
                                 SpecificStats statsPage = new SpecificStats(playerName);
                                 
                                 try{
@@ -86,7 +101,7 @@ public class LolStats {
                                     System.out.println("The stats file may be currently open. Make sure that it is closed");
                                     System.out.print("Press Enter to continue");
                                     new Scanner(System.in).nextLine();
-                                    openingMenu();
+                                    openingMenu(username);
                                 }
                             }
                             innerAccepted = true;
@@ -96,7 +111,7 @@ public class LolStats {
                         while(!innerAccepted){
                             System.out.print("Enter PlayerName for general stats view: ");
                             playerName = input.nextLine();
-                            if(containsName(playerNames, playerName)){
+                            if(containsName(players, playerName)){
                                 GeneralStats genStatsPage = new GeneralStats(playerName);
                                 try{
                                     genStatsPage.doGeneralStats();
@@ -105,7 +120,7 @@ public class LolStats {
                                     System.out.println("The stats file may be currently open. Make sure that it is closed");
                                     System.out.print("Press Enter to continue");
                                     new Scanner(System.in).nextLine();
-                                    openingMenu();
+                                    openingMenu(username);
                                 }
                             }
                             innerAccepted = true;
@@ -131,8 +146,8 @@ public class LolStats {
                 }
         }
         
-        public static void dataEntry(){ 
-            ArrayList<String> teammatesSummonerNames;
+        public static void dataEntry(String username){ 
+        //    ArrayList<String> teammatesSummonerNames;
             ArrayList<String> roles = new ArrayList<>();
             Scanner input = new Scanner(System.in);
 	    players = Players.getAllPlayers();
@@ -147,7 +162,6 @@ public class LolStats {
             boolean teamGotFirstBlood = false;
             boolean personallyGotFirstBlood = false;
             
-
             while(!accepted){
                System.out.print("Enter Place Spawned[Top/Bottom]: ");
                data = input.nextLine();
@@ -345,13 +359,15 @@ public class LolStats {
             data = input.nextLine();
             gameinfo.setDescription(data);
 
+            gameinfo.setSubmitterName(username);
             gameinfo.setGameNumber(gameNumber);
 	    gameinfo.saveIt();
 	    mapinfo.saveIt();
             enterTeammates(gameNumber, gameinfo.getNumTeammates(), teamGotFirstBlood, personallyGotFirstBlood, gameinfo.getGameOutcome(), gameinfo.getRole(), roles);
         }
        
-        private static void enterTeammates(int gameNumber, int numTeammates, boolean teamGotFirstBlood, boolean personallyGotFirstBlood, String gameOutcome, String role, ArrayList<String> roles){
+        private static void enterTeammates(int gameNumber, int numTeammates, boolean teamGotFirstBlood, boolean personallyGotFirstBlood, 
+                                            String gameOutcome, String username, ArrayList<String> roles){
             ArrayList<String> teammates = new ArrayList<String>();
             teammates.add("lolshoppip");
             Scanner input = new Scanner(System.in);
@@ -507,6 +523,7 @@ public class LolStats {
                 
                 System.out.print("Enter Description: ");
                 data = input.nextLine();
+                gameinfo.setSubmitterName(username);
                 gameinfo.setDescription(data);
                 
                 gameinfo.saveIt();
