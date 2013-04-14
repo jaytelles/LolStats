@@ -94,8 +94,7 @@ public class LolStats {
                             System.out.print("Enter PlayerName for detailed stats view: ");
                             playerName = input.nextLine();
                             if(containsName(players, playerName)){
-                                SpecificStats statsPage = new SpecificStats(playerName);
-                                
+                                SpecificStats statsPage = new SpecificStats(playerName, username);
                                 try{
                                     statsPage.doStatsForOnePlayer();
                                 }
