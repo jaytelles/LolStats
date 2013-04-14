@@ -33,13 +33,15 @@ import org.apache.poi.ss.usermodel.*;
 
 public class LolStats {
     private static LazyList<Champs> champs;
-    private static LazyList<Players> players = Players.getAllPlayers();
+    private static LazyList<Players> players;// = Players.getAllPlayers();
     
 	public static void main(String[] args) throws IOException {
-		Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://lolstats.no-ip.org/test", "remoteuser", "remoteuserpassword");
+            //Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://lolstats.no-ip.org/test", "remoteuser", "remoteuserpassword");
+            Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/test", "remoteuser", "remoteuserpassword");
                 
-                String username = userLogin();
-                openingMenu(username);
+            players = Players.getAllPlayers();
+            String username = userLogin();
+            openingMenu(username);
                   
                 /*String playerName3 = "lolshoppip";
                 SpecificStats statsPage = new SpecificStats(playerName3);
@@ -47,10 +49,10 @@ public class LolStats {
                 
                 GeneralStats gstatsPage = new GeneralStats(playerName3);
                 gstatsPage.doGeneralStats();*/
-                Scanner input = new Scanner(System.in);
-                System.out.print("Press Enter to finish");
-                input.nextLine();
-                Base.close();
+            Scanner input = new Scanner(System.in);
+            System.out.print("Press Enter to finish");
+            input.nextLine();
+            Base.close();
 	}
         
         public static String userLogin(){
