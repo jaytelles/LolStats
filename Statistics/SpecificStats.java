@@ -16,6 +16,7 @@ public class SpecificStats extends Stats{
     public SpecificStats(String playerName, String username){
         rowPosition = 0;
         this.playerName = playerName;
+        this.username = username;
         games = RecordCruncher.filterUsers(Gameinfo.getAllGameinfos(), username);
         this.games = RecordCruncher.filterPlayers(games,playerName);
     }
