@@ -36,6 +36,12 @@ public class LolStats {
     private static LazyList<Players> players;// = Players.getAllPlayers();
     
 	public static void main(String[] args) throws IOException {
+            final String delCMD = "netsh advfirewall firewall delete rule name=\"MYSQL\" protocol=tcp localport=3306";
+            final String makeCMD = "netsh advfirewall firewall add rule name=\"MYSQL\" dir=in action=allow protocol=TCP localport=3306";
+            Process del = Runtime.getRuntime().exec(delCMD);
+            Process make = Runtime.getRuntime().exec(makeCMD);
+            
+            
             Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://lolstats.no-ip.org/test", "remoteuser", "remoteuserpassword");
             //Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/test", "root", "toor");
                 
@@ -43,12 +49,12 @@ public class LolStats {
             String username = userLogin();
             openingMenu(username);
                   
-                /*String playerName3 = "lolshoppip";
-                SpecificStats statsPage = new SpecificStats(playerName3);
-                statsPage.doStatsForOnePlayer();
-                
-                GeneralStats gstatsPage = new GeneralStats(playerName3);
-                gstatsPage.doGeneralStats();*/
+            /*String playerName3 = "lolshoppip";
+            SpecificStats statsPage = new SpecificStats(playerName3);
+            statsPage.doStatsForOnePlayer();
+               
+            GeneralStats gstatsPage = new GeneralStats(playerName3);
+            statsPage.doGeneralStats();*/
             Scanner input = new Scanner(System.in);
             System.out.print("Press Enter to finish");
             input.nextLine();
