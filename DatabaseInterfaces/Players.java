@@ -18,7 +18,7 @@ public class Players extends Model{
         this.set("LastName",this.lastName);
     }
     
-    public void setSummonerName(){
+    public void setSummonerName(String summonerName){
         this.summonerName = summonerName;
         this.set("SummonerName",this.summonerName);
     }
