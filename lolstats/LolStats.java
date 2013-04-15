@@ -36,8 +36,8 @@ public class LolStats {
     private static LazyList<Players> players;// = Players.getAllPlayers();
     
 	public static void main(String[] args) throws IOException {
-            //Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://lolstats.no-ip.org/test", "remoteuser", "remoteuserpassword");
-            Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/test", "remoteuser", "remoteuserpassword");
+            Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://lolstats.no-ip.org/test", "remoteuser", "remoteuserpassword");
+            //Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/test", "remoteuser", "remoteuserpassword");
                 
             players = Players.getAllPlayers();
             String username = userLogin();
