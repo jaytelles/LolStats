@@ -37,7 +37,7 @@ public class LolStats {
     
 	public static void main(String[] args) throws IOException {
             Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://lolstats.no-ip.org/test", "remoteuser", "remoteuserpassword");
-            //Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/test", "remoteuser", "remoteuserpassword");
+            //Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/test", "root", "toor");
                 
             players = Players.getAllPlayers();
             String username = userLogin();
@@ -80,7 +80,11 @@ public class LolStats {
                 System.out.println("1. Enter Stats for a game");
                 System.out.println("2. Specific Stats For Player");
                 System.out.println("3. General Stats For Player");
-                System.out.println("4. Enter new champ");
+                if(username.equalsIgnoreCase("lolshoppip")){
+                    System.out.println("4. Enter new champ");
+                    System.out.println("5. Add a new player");
+                }
+                
                 
                 while(!accepted){
                     System.out.print("\tEnter your choice: ");
@@ -127,7 +131,7 @@ public class LolStats {
                             innerAccepted = true;
                         }
                         accepted = true;
-                    } else if (line.equals("4")){
+                    } else if (line.equals("4") && username.equalsIgnoreCase("lolshoppip")){
                         while(!innerAccepted){
                             System.out.print("Enter new champ: ");
                             String newname1 = input.nextLine();
@@ -143,7 +147,39 @@ public class LolStats {
                             }
                         }
                         accepted = true;
-                    }   
+                    }  else if(line.equals("5") && username.equalsIgnoreCase("lolshoppip")){
+                        while(!innerAccepted){
+                            System.out.print("Enter First Name: ");
+                            String firstName1 = input.nextLine();
+                            System.out.print("Confirm First Name: ");
+                            String firstName2 = input.nextLine();
+                            
+                            if(firstName1.equals(firstName2)){
+                                System.out.print("Enter Last Name: ");
+                                String lastName1 = input.nextLine();
+                                System.out.print("Confirm Last Name: ");
+                                String lastName2 = input.nextLine();
+                                
+                                if(lastName1.equals(lastName2)){
+                                    System.out.print("Enter Summoner Name: ");
+                                    String summoner1 = input.nextLine();
+                                    System.out.print("Confirm Summoner Name: ");
+                                    String summoner2 = input.nextLine();
+                                    
+                                    if(summoner1.equals(summoner2)){
+                                        System.out.println("here");
+                                        innerAccepted = true;
+                                        Players player = new Players();
+                                        player.setFirstName(firstName1);
+                                        player.setLastName(lastName1);
+                                        player.setSummonerName(summoner1);
+                                        player.saveIt();
+                                    }
+                                }
+                            }                            
+                        }
+                    }
+                    accepted = true;
                 }
         }
         
