@@ -24,14 +24,16 @@ public class GeneralStats extends Stats{
     public boolean doGeneralStats() throws IOException{
          Workbook wb = new HSSFWorkbook();
          Sheet sh = wb.createSheet("Sheet1");
-         FileOutputStream fos = new FileOutputStream(username+"'s stats for "+playerName+" general.xls");            
+         FileOutputStream fos = new FileOutputStream(username+"'s stats for "+playerName+" general.xls");   
+         ArrayList<String> matchupColumns = new ArrayList<>();
+         matchupColumns.add("Role");
 
          rowPosition = super.writeStatsTotalRowColumnHeader(sh,rowPosition, 0);
             
          rowPosition = doStatsTotalRow(sh,games,rowPosition,0);
          
-         rowPosition++;
-         rowPosition = writeStatsRowColumnHeader(sh,rowPosition,0,"Role",false);
+         rowPosition++; 
+         rowPosition = writeStatsRowColumnHeader(sh,rowPosition,0,matchupColumns);
          rowPosition = super.doStatsRow(sh,RecordCruncher.filterRole(games, "Support"), rowPosition, 0, games.size(),"Support");
          rowPosition = super.doStatsRow(sh,RecordCruncher.filterRole(games, "ADC"), rowPosition, 0, games.size(),"ADC");
          rowPosition = super.doStatsRow(sh,RecordCruncher.filterRole(games, "Mid"), rowPosition, 0, games.size(),"Mid");
@@ -39,7 +41,7 @@ public class GeneralStats extends Stats{
          rowPosition = super.doStatsRow(sh,RecordCruncher.filterRole(games, "Top"), rowPosition, 0, games.size(),"Top");
            
          rowPosition++;
-         rowPosition = super.writeStatsRowColumnHeader(sh,rowPosition,0,"Teammates",false);
+         rowPosition = super.writeStatsRowColumnHeader(sh,rowPosition,0,matchupColumns);
          rowPosition = doStatsRow(sh,RecordCruncher.filterNumTeammates(games, 0),rowPosition, 0, games.size(), "0");
          rowPosition = doStatsRow(sh,RecordCruncher.filterNumTeammates(games, 1),rowPosition, 0, games.size(), "1");
          rowPosition = doStatsRow(sh,RecordCruncher.filterNumTeammates(games, 2),rowPosition, 0, games.size(), "2");
@@ -49,7 +51,9 @@ public class GeneralStats extends Stats{
          
          ArrayList<String> champNames = RecordCruncher.findAllChampions(games);
          ArrayList<Gameinfo> champGames;
-         rowPosition = super.writeStatsRowColumnHeader(sh,rowPosition,0,"Champion",false);
+         matchupColumns.clear();
+         matchupColumns.add("Champion");
+         rowPosition = super.writeStatsRowColumnHeader(sh,rowPosition,0,matchupColumns);
          for(int k=0; k<champNames.size(); k++){
              champGames = RecordCruncher.filterChampions(games, champNames.get(k));
              rowPosition = doStatsRow(sh, champGames, rowPosition, 0, champGames.size(), champNames.get(k));
@@ -58,7 +62,9 @@ public class GeneralStats extends Stats{
          
          ArrayList<Gameinfo> teammateGames;
          ArrayList<String> teammateNames = RecordCruncher.findAllTeammates(Gameinfo.getAllGameinfos());
-         rowPosition = super.writeStatsRowColumnHeader(sh,rowPosition,0,"Teammate",false);
+         matchupColumns.clear();
+         matchupColumns.add("Role");
+         rowPosition = super.writeStatsRowColumnHeader(sh,rowPosition,0,matchupColumns);
          for(int k=0; k<teammateNames.size(); k++){
              teammateGames = RecordCruncher.filterPlayers(Gameinfo.getAllGameinfos(), teammateNames.get(k));
              rowPosition = doStatsRow(sh,teammateGames,rowPosition,0,teammateGames.size(), teammateNames.get(k));

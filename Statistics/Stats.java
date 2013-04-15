@@ -88,14 +88,17 @@ public abstract class Stats {
             return ++rowPosition;
         }
     
-    protected int writeStatsRowColumnHeader(Sheet sh, int rowPosition, int cellPosition, String rowHeader, boolean isMatchup) throws IOException{
+    protected int writeStatsRowColumnHeader(Sheet sh, int rowPosition, int cellPosition, ArrayList<String> extraColumns) throws IOException{
             Row row = sh.createRow(rowPosition);
             Cell cell;
             
-            if(isMatchup){
+            /*if(isMatchup){
                 cell = row.createCell(cellPosition); cellPosition++; cell.setCellValue("Role");
             }
-            cell = row.createCell(cellPosition); cellPosition++; cell.setCellValue(rowHeader);
+            cell = row.createCell(cellPosition); cellPosition++; cell.setCellValue(rowHeader);*/
+            for(int k=0; k<extraColumns.size(); k++){
+                cell = row.createCell(cellPosition); cellPosition++; cell.setCellValue(extraColumns.get(k));
+            }
             cell = row.createCell(cellPosition); cellPosition++; cell.setCellValue("Won");
             cell = row.createCell(cellPosition); cellPosition++; cell.setCellValue("Lost");
             cell = row.createCell(cellPosition); cellPosition++; cell.setCellValue("Streak");
@@ -119,8 +122,7 @@ public abstract class Stats {
             return ++rowPosition;
         }
     
-    protected int doStatsRow(Sheet sh, ArrayList<Gameinfo> games, int rowPosition, int cellPosition, int totalSize, String rowHeader) throws IOException
-    {
+    protected int doStatsRow(Sheet sh, ArrayList<Gameinfo> games, int rowPosition, int cellPosition, int totalSize, String rowHeader) throws IOException{
             Row row = sh.createRow(rowPosition);
             double total, wins, losses, streak, kills, deaths, assists, lanesWon, timesFB;
            

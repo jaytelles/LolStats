@@ -26,28 +26,32 @@ public class SpecificStats extends Stats{
             //this is meant to be a very detailed view
             Workbook wb = new HSSFWorkbook();
             Sheet sh = wb.createSheet("Sheet1");
-            FileOutputStream fos = new FileOutputStream(username+" stats for "+playerName+" specific.xls");            
+            FileOutputStream fos = new FileOutputStream(username+" stats for "+playerName+" specific.xls");  
+            ArrayList<String> matchupColumns = new ArrayList<>();
+            matchupColumns.add("Role");
 
             rowPosition = super.writeStatsTotalRowColumnHeader(sh,rowPosition, 0);
             
             rowPosition = super.doStatsTotalRow(sh,games,rowPosition,0);
             
             rowPosition++;
-            rowPosition = super.writeStatsRowColumnHeader(sh,rowPosition,0,"Role",false);
+            rowPosition = super.writeStatsRowColumnHeader(sh,rowPosition,0,matchupColumns);
             rowPosition = super.doStatsRow(sh,RecordCruncher.filterRole(games, "Support"), rowPosition, 0, games.size(),"Support");
             rowPosition = super.doStatsRow(sh,RecordCruncher.filterRole(games, "ADC"), rowPosition, 0, games.size(),"ADC");
             rowPosition = super.doStatsRow(sh,RecordCruncher.filterRole(games, "Mid"), rowPosition, 0, games.size(),"Mid");
             rowPosition = super.doStatsRow(sh,RecordCruncher.filterRole(games, "Jungler"), rowPosition, 0, games.size(),"Jungler");
             rowPosition = super.doStatsRow(sh,RecordCruncher.filterRole(games, "Top"), rowPosition, 0, games.size(),"Top");
             
+            matchupColumns.clear();
+            matchupColumns.add("Teammates");
             rowPosition++;
-            rowPosition = super.writeStatsRowColumnHeader(sh,rowPosition,0,"Teammates",false);
+            rowPosition = super.writeStatsRowColumnHeader(sh,rowPosition,0,matchupColumns);
             rowPosition = super.doStatsRow(sh,RecordCruncher.filterNumTeammates(games, 0),rowPosition, 0, games.size(), "0");
             rowPosition = super.doStatsRow(sh,RecordCruncher.filterNumTeammates(games, 1),rowPosition, 0, games.size(), "1");
             rowPosition = super.doStatsRow(sh,RecordCruncher.filterNumTeammates(games, 2),rowPosition, 0, games.size(), "2");
             rowPosition = super.doStatsRow(sh,RecordCruncher.filterNumTeammates(games, 3),rowPosition, 0, games.size(), "3");
             rowPosition = super.doStatsRow(sh,RecordCruncher.filterNumTeammates(games, 4),rowPosition, 0, games.size(), "4");        
-            
+            rowPosition++;
             doSpecificChampStats(sh, games, rowPosition);
             
             //1st blood stats
@@ -59,60 +63,68 @@ public class SpecificStats extends Stats{
             fos.close();     
         }
     
-    private boolean doSpecificChampStats(Sheet sh, ArrayList<Gameinfo> games, int rowPosition) throws IOException{           
-            ArrayList<String> champNames = RecordCruncher.findAllChampions(games);
-            ArrayList<Gameinfo> champGames;
-            ArrayList<Gameinfo> roleGames;
-            ArrayList<String> matchupNames;
-            ArrayList<Gameinfo> matchupGames;
+    private boolean doSpecificChampStats(Sheet sh, ArrayList<Gameinfo> games, int rowPosition) throws IOException{  
+        
+        ArrayList<String> champNames = RecordCruncher.findAllChampions(games);
+        ArrayList<Gameinfo> champGames;
+        ArrayList<Gameinfo> roleGames;
+        ArrayList<String> matchupNames;
+        ArrayList<Gameinfo> matchupGames;
+        
+        ArrayList<String> championColumns = new ArrayList<>();
+        championColumns.add("Champion");
+        
+        ArrayList<String> matchupColumns = new ArrayList<>();
+        matchupColumns.add("Role");
+        matchupColumns.add("Matchup");
             
-            for(int k=0; k<champNames.size(); k++){
-                writeStatsRowColumnHeader(sh,rowPosition,0,"Champion",false); rowPosition++;
-                champGames = RecordCruncher.filterChampions(games, champNames.get(k));
-                doStatsRow(sh, champGames, rowPosition, 0, champGames.size(), champNames.get(k)); rowPosition++;
-                writeStatsRowColumnHeader(sh,rowPosition,1,"Matchup",true);rowPosition++;
+        for(int k=0; k<champNames.size(); k++){
+            writeStatsRowColumnHeader(sh,rowPosition,0,championColumns); rowPosition++;
+            champGames = RecordCruncher.filterChampions(games, champNames.get(k));
+            doStatsRow(sh, champGames, rowPosition, 0, champGames.size(), champNames.get(k)); rowPosition++;
+            writeStatsRowColumnHeader(sh,rowPosition,1,matchupColumns);rowPosition++;
                 
-                roleGames = RecordCruncher.filterRole(champGames, "Top");
-                matchupNames = RecordCruncher.findAllMatchups(roleGames);
-                for(int m=0; m<matchupNames.size(); m++){
-                    matchupGames = RecordCruncher.filterMatchups(roleGames,matchupNames.get(m));
-                    doMatchupStatsRow(sh,matchupGames,rowPosition, 1, matchupGames.size(), matchupNames.get(m), "Top"); rowPosition++;
-                }
+            roleGames = RecordCruncher.filterRole(champGames, "Top");
+            matchupNames = RecordCruncher.findAllMatchups(roleGames);
+            for(int m=0; m<matchupNames.size(); m++){
+                matchupGames = RecordCruncher.filterMatchups(roleGames,matchupNames.get(m));
+                doMatchupStatsRow(sh,matchupGames,rowPosition, 1, matchupGames.size(), matchupNames.get(m), "Top"); rowPosition++;
+            }
                 
-                roleGames = RecordCruncher.filterRole(champGames, "Jungler");
-                matchupNames = RecordCruncher.findAllMatchups(roleGames);
-                for(int m=0; m<matchupNames.size(); m++){
-                    matchupGames = RecordCruncher.filterMatchups(roleGames,matchupNames.get(m));
-                    doMatchupStatsRow(sh,matchupGames,rowPosition, 1, matchupGames.size(), matchupNames.get(m), "Jungler"); rowPosition++;
-                }
-                
-                roleGames = RecordCruncher.filterRole(champGames, "Mid");
-                matchupNames = RecordCruncher.findAllMatchups(roleGames);
-                for(int m=0; m<matchupNames.size(); m++){
-                    matchupGames = RecordCruncher.filterMatchups(roleGames,matchupNames.get(m));
-                    doMatchupStatsRow(sh,matchupGames,rowPosition, 1, matchupGames.size(), matchupNames.get(m), "Mid"); rowPosition++;
-                }
-                
-                roleGames = RecordCruncher.filterRole(champGames, "ADC");
-                matchupNames = RecordCruncher.findAllMatchups(roleGames);
-                for(int m=0; m<matchupNames.size(); m++){
-                    matchupGames = RecordCruncher.filterMatchups(roleGames,matchupNames.get(m));
-                    doMatchupStatsRow(sh,matchupGames,rowPosition, 1, matchupGames.size(), matchupNames.get(m), "Adc"); rowPosition++;
-                }
-                
-                roleGames = RecordCruncher.filterRole(champGames, "Support");
-                matchupNames = RecordCruncher.findAllMatchups(roleGames);
-                for(int m=0; m<matchupNames.size(); m++){
-                    matchupGames = RecordCruncher.filterMatchups(roleGames,matchupNames.get(m));
-                    doMatchupStatsRow(sh,matchupGames,rowPosition, 1, matchupGames.size(), matchupNames.get(m), "Support"); rowPosition++;
-                }
-                
-                
-                rowPosition+=2;
+            roleGames = RecordCruncher.filterRole(champGames, "Jungler");
+            matchupNames = RecordCruncher.findAllMatchups(roleGames);
+            for(int m=0; m<matchupNames.size(); m++){
+                matchupGames = RecordCruncher.filterMatchups(roleGames,matchupNames.get(m));
+                doMatchupStatsRow(sh,matchupGames,rowPosition, 1, matchupGames.size(), matchupNames.get(m), "Jungler"); rowPosition++;
+            }
+              
+            roleGames = RecordCruncher.filterRole(champGames, "Mid");
+            matchupNames = RecordCruncher.findAllMatchups(roleGames);
+            for(int m=0; m<matchupNames.size(); m++){
+                matchupGames = RecordCruncher.filterMatchups(roleGames,matchupNames.get(m));
+                doMatchupStatsRow(sh,matchupGames,rowPosition, 1, matchupGames.size(), matchupNames.get(m), "Mid"); rowPosition++;
             }
             
-            return true;
+            roleGames = RecordCruncher.filterRole(champGames, "ADC");
+            matchupNames = RecordCruncher.findAllMatchups(roleGames);
+            for(int m=0; m<matchupNames.size(); m++){
+                matchupGames = RecordCruncher.filterMatchups(roleGames,matchupNames.get(m));
+                doMatchupStatsRow(sh,matchupGames,rowPosition, 1, matchupGames.size(), matchupNames.get(m), "Adc"); rowPosition++;
+            }
+            
+            roleGames = RecordCruncher.filterRole(champGames, "Support");
+            matchupNames = RecordCruncher.findAllMatchups(roleGames);
+            for(int m=0; m<matchupNames.size(); m++){
+                matchupGames = RecordCruncher.filterMatchups(roleGames,matchupNames.get(m));
+                doMatchupStatsRow(sh,matchupGames,rowPosition, 1, matchupGames.size(), matchupNames.get(m), "Support"); rowPosition++;
+            }
+               
+                
+            rowPosition+=2;
         }
+            
+        return true;
+    }
             
     private boolean doMatchupStatsRow(Sheet sh, ArrayList<Gameinfo> games, int rowPosition, int cellPosition, int totalSize, String rowHeader, String role) throws IOException{
             Row row = sh.createRow(rowPosition);
