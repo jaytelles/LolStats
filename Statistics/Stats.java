@@ -92,10 +92,6 @@ public abstract class Stats {
             Row row = sh.createRow(rowPosition);
             Cell cell;
             
-            /*if(isMatchup){
-                cell = row.createCell(cellPosition); cellPosition++; cell.setCellValue("Role");
-            }
-            cell = row.createCell(cellPosition); cellPosition++; cell.setCellValue(rowHeader);*/
             for(int k=0; k<extraColumns.size(); k++){
                 cell = row.createCell(cellPosition); cellPosition++; cell.setCellValue(extraColumns.get(k));
             }
