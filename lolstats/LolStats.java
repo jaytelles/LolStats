@@ -38,8 +38,8 @@ public class LolStats {
 	public static void main(String[] args) throws IOException {
             final String delCMD = "netsh advfirewall firewall delete rule name=\"MYSQL\" protocol=tcp localport=3306";
             final String makeCMD = "netsh advfirewall firewall add rule name=\"MYSQL\" dir=in action=allow protocol=TCP localport=3306";
-            Process del = Runtime.getRuntime().exec(delCMD);
-            Process make = Runtime.getRuntime().exec(makeCMD);
+            Runtime.getRuntime().exec(delCMD);
+            Runtime.getRuntime().exec(makeCMD);
             
             
             Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://lolstats.no-ip.org/test", "remoteuser", "remoteuserpassword");
