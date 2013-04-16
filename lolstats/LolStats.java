@@ -79,9 +79,8 @@ public class LolStats {
         public static void openingMenu(String username){
                 Scanner input = new Scanner(System.in);
                 String line;
-                boolean accepted = false;
-                
                 String playerName;
+                boolean accepted = false;
                 
                 System.out.println("1. Enter Stats for a game");
                 System.out.println("2. Specific Stats For Player");
@@ -89,7 +88,7 @@ public class LolStats {
                 if(username.equalsIgnoreCase("lolshoppip")){
                     System.out.println("4. Enter new champ");
                     System.out.println("5. Add a new player");
-                }
+                }                
                 System.out.println("Quit to end");
                 
                 
@@ -97,8 +96,7 @@ public class LolStats {
                     System.out.print("\tEnter your choice: ");
                     line = input.nextLine();
                     accepted = false;
-                    //innerAccepted = false;
-                    
+                                        
                     if(line.equals("1")){
                         dataEntry(username);
                     } else if (line.equals("2")){
@@ -120,7 +118,6 @@ public class LolStats {
                                 innerAccepted = true;
                             }
                         }
-                        //accepted = true;
                     } else if(line.equals("3")){
                         boolean innerAccepted = false;
                         while(!innerAccepted){
@@ -140,7 +137,6 @@ public class LolStats {
                             }
                             innerAccepted = true;
                         }
-                        //accepted = true;
                     } else if (line.equals("4") && username.equalsIgnoreCase("lolshoppip")){
                         boolean innerAccepted = false;
                         while(!innerAccepted){
@@ -157,7 +153,6 @@ public class LolStats {
                                 System.out.println("Names didn't match. Try again.");
                             }
                         }
-                        accepted = true;
                     }  else if(line.equals("5") && username.equalsIgnoreCase("lolshoppip")){
                         boolean innerAccepted = false;
                         while(!innerAccepted){
@@ -179,13 +174,24 @@ public class LolStats {
                                     String summoner2 = input.nextLine();
                                     
                                     if(summoner1.equals(summoner2)){
-                                        System.out.println("here");
                                         innerAccepted = true;
                                         Players player = new Players();
                                         player.setFirstName(firstName1);
                                         player.setLastName(lastName1);
                                         player.setSummonerName(summoner1);
-                                        player.saveIt();
+                                        
+                                        boolean contained = false;
+                                        for(int k=0; k<players.size()&&!contained; k++){
+                                            if(players.get(k).getSummonerName().equalsIgnoreCase(player.getSummonerName())){
+                                                contained = true;
+                                            }
+                                        }
+                                        
+                                        if(!contained){
+                                            player.saveIt();
+                                        } else {
+                                            System.out.println("That summoner name is already contained in this table. \nAre you sure you typed in the correct name?");
+                                        }
                                     }
                                 }
                             }                            
@@ -193,7 +199,6 @@ public class LolStats {
                     } else if(line.equalsIgnoreCase("quit")||line.equalsIgnoreCase("exit")){
                         accepted = true;
                     }
-                    //accepted = true;
                 }
         }
         
