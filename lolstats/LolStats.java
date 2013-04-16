@@ -203,7 +203,6 @@ public class LolStats {
         }
         
         public static void dataEntry(String username){ 
-        //    ArrayList<String> teammatesSummonerNames;
             ArrayList<String> roles = new ArrayList<>();
             Scanner input = new Scanner(System.in);
 	    players = Players.getAllPlayers();
