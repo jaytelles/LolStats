@@ -47,8 +47,8 @@ public class LolStats {
                 
             players = Players.getAllPlayers();
             champs = Champs.getAllChamps();
-            String username = userLogin();
-            openingMenu(username);
+            Players player = userLogin();
+            openingMenu(player);
                   
             /*String playerName3 = "lolshoppip";
             SpecificStats statsPage = new SpecificStats(playerName3);
@@ -62,22 +62,27 @@ public class LolStats {
             Base.close();
 	}
         
-        public static String userLogin(){
+        public static Players userLogin(){
             Scanner input = new Scanner(System.in);
             String username = "";
             boolean accepted = false;
+            int k = 0;
 
             while(!accepted){
                 System.out.print("Enter your summoner name: ");
                 username = input.nextLine();
-                if(containsName(players,username)){
-                    accepted = true;
+                
+                for(k=0; k<players.size(); k++){
+                    if(players.get(k).getSummonerName().equals(username)){
+                        break;
+                    }
                 }
+                accepted = true;
             }
-            return username;
+            return players.get(k);
         }
         
-        public static void openingMenu(String username){
+        public static void openingMenu(Players player){
                 Scanner input = new Scanner(System.in);
                 String line;
                 String playerName;
@@ -86,12 +91,17 @@ public class LolStats {
                 System.out.println("1. Enter Stats for a game");
                 System.out.println("2. Specific Stats For Player");
                 System.out.println("3. General Stats For Player");
-               
-                if(username.equalsIgnoreCase("lolshoppip")){
+                
+                if(player.getModStatus().equalsIgnoreCase("yes")){
                     System.out.println("4. Add a new player");
                     System.out.println("5. Enter new champ");
-                }                
+                }
+                if(player.getSuperStatus().equalsIgnoreCase("yes")){
+                    System.out.println("6. Make a player a mod/super");
+                }
                 System.out.println("Quit|Exit to terminate this runtime instance");
+                System.out.println("mod status of " + player.getSummonerName() + ": "+ player.getModStatus());
+                System.out.println("super status of " + player.getSummonerName() + ": "+ player.getSuperStatus());
                  
                 while(!accepted){
                     System.out.print("\tEnter your choice: ");
@@ -99,14 +109,14 @@ public class LolStats {
                     accepted = false;
                                         
                     if(line.equals("1")){
-                        dataEntry(username);
+                        dataEntry(player.getSummonerName());
                     } else if (line.equals("2")){
                         boolean innerAccepted = false;
                         while(!innerAccepted){
                             System.out.print("Enter PlayerName for detailed stats view: ");
                             playerName = input.nextLine();
                             if(containsName(players, playerName)){
-                                SpecificStats statsPage = new SpecificStats(playerName, username);
+                                SpecificStats statsPage = new SpecificStats(playerName, player.getSummonerName());
                                 try{
                                     statsPage.doStatsForOnePlayer();
                                 }
@@ -114,7 +124,7 @@ public class LolStats {
                                     System.out.println("The stats file may be currently open. Make sure that it is closed");
                                     System.out.print("Press Enter to continue");
                                     new Scanner(System.in).nextLine();
-                                    openingMenu(username);
+                                    openingMenu(player);
                                 }
                                 innerAccepted = true;
                             }
@@ -125,7 +135,7 @@ public class LolStats {
                             System.out.print("Enter PlayerName for general stats view: ");
                             playerName = input.nextLine();
                             if(containsName(players, playerName)){
-                                GeneralStats genStatsPage = new GeneralStats(playerName, username);
+                                GeneralStats genStatsPage = new GeneralStats(playerName, player.getSummonerName());
                                 try{
                                     genStatsPage.doGeneralStats();
                                 }
@@ -133,12 +143,12 @@ public class LolStats {
                                     System.out.println("The stats file may be currently open. Make sure that it is closed");
                                     System.out.print("Press Enter to continue");
                                     new Scanner(System.in).nextLine();
-                                    openingMenu(username);
+                                    openingMenu(player);
                                 }
                             }
                             innerAccepted = true;
                         }
-                    } else if(line.equals("4") && username.equalsIgnoreCase("lolshoppip")){
+                    } else if(line.equals("4") && player.getModStatus().equalsIgnoreCase("yes")){
                         boolean innerAccepted = false;
                         while(!innerAccepted){
                             System.out.print("Enter First Name: ");
@@ -160,20 +170,20 @@ public class LolStats {
                                     
                                     if(summoner1.equals(summoner2)){
                                         innerAccepted = true;
-                                        Players player = new Players();
-                                        player.setFirstName(firstName1);
-                                        player.setLastName(lastName1);
-                                        player.setSummonerName(summoner1);
+                                        Players createdPlayer = new Players();
+                                        createdPlayer.setFirstName(firstName1);
+                                        createdPlayer.setLastName(lastName1);
+                                        createdPlayer.setSummonerName(summoner1);
                                         
                                         boolean contained = false;
                                         for(int k=0; k<players.size()&&!contained; k++){
-                                            if(players.get(k).getSummonerName().equalsIgnoreCase(player.getSummonerName())){
+                                            if(players.get(k).getSummonerName().equalsIgnoreCase(createdPlayer.getSummonerName())){
                                                 contained = true;
                                             }
                                         }
                                         
                                         if(!contained){
-                                            player.saveIt();
+                                            createdPlayer.saveIt();
                                         } else {
                                             System.out.println("That summoner name is already contained in this table. \nAre you sure you typed in the correct name?");
                                         }
@@ -181,7 +191,7 @@ public class LolStats {
                                 }
                             }                            
                         }
-                    } else if (line.equals("5") && username.equalsIgnoreCase("lolshoppip")){
+                    } else if (line.equals("5") &&  player.getModStatus().equalsIgnoreCase("yes")){
                         boolean innerAccepted = false;
                         while(!innerAccepted){
                             System.out.print("Enter new champ: ");
@@ -209,7 +219,13 @@ public class LolStats {
                                 System.out.println("Names didn't match. Try again.");
                             }
                         }
-                    }   else if(line.equalsIgnoreCase("quit")||line.equalsIgnoreCase("exit")){
+                    } else if(line.equalsIgnoreCase("6") && player.getSuperStatus().equalsIgnoreCase("Yes")){
+                        System.out.println("here");
+                    }
+                    
+                    
+                    
+                    else if(line.equalsIgnoreCase("quit")||line.equalsIgnoreCase("exit")){
                         accepted = true;
                     }
                 }
@@ -229,7 +245,6 @@ public class LolStats {
             boolean accepted = false;
             boolean teamGotFirstBlood = false;
             boolean personallyGotFirstBlood = false;
-            String playerName = "";
             
             while(!accepted){
                System.out.print("Enter Place Spawned[Top/Bottom]: ");
@@ -273,7 +288,7 @@ public class LolStats {
            }
            accepted = false;     
             
-            while(!accepted){
+            /*while(!accepted){
                 System.out.print("Enter Your Summoner Name: ");
                 playerName = input.nextLine();
                 if(containsName(players, playerName)){
@@ -281,7 +296,8 @@ public class LolStats {
                     gameinfo.setPlayerName(playerName);
                 }   
             }
-            accepted = false;
+            accepted = false;*/
+           gameinfo.setPlayerName(username);
 
             while(!accepted){
                 System.out.print("Enter your champion: ");
@@ -431,13 +447,13 @@ public class LolStats {
             gameinfo.setGameNumber(gameNumber);
 	    gameinfo.saveIt();
 	    mapinfo.saveIt();
-            enterTeammates(gameNumber, gameinfo.getNumTeammates(), teamGotFirstBlood, personallyGotFirstBlood, gameinfo.getGameOutcome(), gameinfo.getRole(), roles, playerName);
+            enterTeammates(gameNumber, gameinfo.getNumTeammates(), teamGotFirstBlood, personallyGotFirstBlood, gameinfo.getGameOutcome(), gameinfo.getRole(), roles);
         }
        
         private static void enterTeammates(int gameNumber, int numTeammates, boolean teamGotFirstBlood, boolean personallyGotFirstBlood, 
-                                            String gameOutcome, String username, ArrayList<String> roles, String playerName){
+                                            String gameOutcome, String username, ArrayList<String> roles){
             ArrayList<String> teammates = new ArrayList<String>();
-            teammates.add(playerName);
+            teammates.add(username);
             Scanner input = new Scanner(System.in);
             Gameinfo gameinfo;
             String data = "";
