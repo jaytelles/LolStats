@@ -229,6 +229,7 @@ public class LolStats {
             boolean accepted = false;
             boolean teamGotFirstBlood = false;
             boolean personallyGotFirstBlood = false;
+            String playerName = "";
             
             while(!accepted){
                System.out.print("Enter Place Spawned[Top/Bottom]: ");
@@ -274,11 +275,10 @@ public class LolStats {
             
             while(!accepted){
                 System.out.print("Enter Your Summoner Name: ");
-                data = input.nextLine();
-                if(containsName(players, data)){
+                playerName = input.nextLine();
+                if(containsName(players, playerName)){
                     accepted = true;
-                    gameinfo.setPlayerName(data);
-                    data = "";
+                    gameinfo.setPlayerName(playerName);
                 }   
             }
             accepted = false;
@@ -431,13 +431,13 @@ public class LolStats {
             gameinfo.setGameNumber(gameNumber);
 	    gameinfo.saveIt();
 	    mapinfo.saveIt();
-            enterTeammates(gameNumber, gameinfo.getNumTeammates(), teamGotFirstBlood, personallyGotFirstBlood, gameinfo.getGameOutcome(), gameinfo.getRole(), roles);
+            enterTeammates(gameNumber, gameinfo.getNumTeammates(), teamGotFirstBlood, personallyGotFirstBlood, gameinfo.getGameOutcome(), gameinfo.getRole(), roles, playerName);
         }
        
         private static void enterTeammates(int gameNumber, int numTeammates, boolean teamGotFirstBlood, boolean personallyGotFirstBlood, 
-                                            String gameOutcome, String username, ArrayList<String> roles){
+                                            String gameOutcome, String username, ArrayList<String> roles, String playerName){
             ArrayList<String> teammates = new ArrayList<String>();
-            teammates.add("lolshoppip");
+            teammates.add(playerName);
             Scanner input = new Scanner(System.in);
             Gameinfo gameinfo;
             String data = "";
