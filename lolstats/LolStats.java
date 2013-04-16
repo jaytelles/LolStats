@@ -86,9 +86,11 @@ public class LolStats {
                 System.out.println("1. Enter Stats for a game");
                 System.out.println("2. Specific Stats For Player");
                 System.out.println("3. General Stats For Player");
+                
+                
                 if(username.equalsIgnoreCase("lolshoppip")){
-                    System.out.println("4. Enter new champ");
-                    System.out.println("5. Add a new player");
+                    System.out.println("4. Add a new player");
+                    System.out.println("5. Enter new champ");
                 }                
                 System.out.println("Quit to end");
                 
@@ -138,35 +140,7 @@ public class LolStats {
                             }
                             innerAccepted = true;
                         }
-                    } else if (line.equals("4") && username.equalsIgnoreCase("lolshoppip")){
-                        boolean innerAccepted = false;
-                        while(!innerAccepted){
-                            System.out.print("Enter new champ: ");
-                            String newname1 = input.nextLine();
-                            System.out.print("Confirm new champ: ");
-                            String newname2 = input.nextLine();
-                            if(newname1.equals(newname2)){
-                                innerAccepted = true;
-                                Champs champ = new Champs();
-                                champ.setName(newname1);
-                                
-                                boolean contained = false;
-                                for(int k=0; k<champs.size()&&!contained; k++){
-                                    if(champs.get(k).getName().equalsIgnoreCase(champ.getName())){
-                                        contained = true;
-                                    }   
-                                }
-                               
-                                if(!contained){
-                                    champ.saveIt();
-                                } else {
-                                    System.out.println("Champion already contained in table");
-                                }
-                            } else {
-                                System.out.println("Names didn't match. Try again.");
-                            }
-                        }
-                    }  else if(line.equals("5") && username.equalsIgnoreCase("lolshoppip")){
+                    } else if(line.equals("4") && username.equalsIgnoreCase("lolshoppip")){
                         boolean innerAccepted = false;
                         while(!innerAccepted){
                             System.out.print("Enter First Name: ");
@@ -209,7 +183,35 @@ public class LolStats {
                                 }
                             }                            
                         }
-                    } else if(line.equalsIgnoreCase("quit")||line.equalsIgnoreCase("exit")){
+                    } else if (line.equals("5") && username.equalsIgnoreCase("lolshoppip")){
+                        boolean innerAccepted = false;
+                        while(!innerAccepted){
+                            System.out.print("Enter new champ: ");
+                            String newname1 = input.nextLine();
+                            System.out.print("Confirm new champ: ");
+                            String newname2 = input.nextLine();
+                            if(newname1.equals(newname2)){
+                                innerAccepted = true;
+                                Champs champ = new Champs();
+                                champ.setName(newname1);
+                                
+                                boolean contained = false;
+                                for(int k=0; k<champs.size()&&!contained; k++){
+                                    if(champs.get(k).getName().equalsIgnoreCase(champ.getName())){
+                                        contained = true;
+                                    }   
+                                }
+                               
+                                if(!contained){
+                                    champ.saveIt();
+                                } else {
+                                    System.out.println("Champion already contained in table");
+                                }
+                            } else {
+                                System.out.println("Names didn't match. Try again.");
+                            }
+                        }
+                    }   else if(line.equalsIgnoreCase("quit")||line.equalsIgnoreCase("exit")){
                         accepted = true;
                     }
                 }
