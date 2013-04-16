@@ -18,11 +18,8 @@ public class GeneralStats extends Stats{
         this.playerName = playerName;
         this.username = username;
         
-        System.out.println("games size before first filter: " + Gameinfo.getAllGameinfos().size());
         games = RecordCruncher.filterUsers(Gameinfo.getAllGameinfos(), username);
-        System.out.println("games size before second filter: " + games.size());
         games = RecordCruncher.filterPlayers(games,playerName);
-        System.out.println("games size after second filter: " + games.size());
     }
     
     public boolean doGeneralStats() throws IOException{
@@ -59,9 +56,7 @@ public class GeneralStats extends Stats{
          matchupColumns.clear();
          matchupColumns.add("Champion");
          rowPosition = super.writeStatsRowColumnHeader(sh,rowPosition,0,matchupColumns);
-         System.out.println("champNames.size(): " + champNames.size());
          for(int k=0; k<champNames.size(); k++){
-             System.out.println("here");
              champGames = RecordCruncher.filterChampions(games, champNames.get(k));
              rowPosition = doStatsRow(sh, champGames, rowPosition, 0, champGames.size(), champNames.get(k));
          }
