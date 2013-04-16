@@ -86,15 +86,13 @@ public class LolStats {
                 System.out.println("1. Enter Stats for a game");
                 System.out.println("2. Specific Stats For Player");
                 System.out.println("3. General Stats For Player");
-                
-                
+               
                 if(username.equalsIgnoreCase("lolshoppip")){
                     System.out.println("4. Add a new player");
                     System.out.println("5. Enter new champ");
                 }                
-                System.out.println("Quit to end");
-                
-                
+                System.out.println("Quit|Exit to terminate this runtime instance");
+                 
                 while(!accepted){
                     System.out.print("\tEnter your choice: ");
                     line = input.nextLine();
