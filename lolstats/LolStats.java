@@ -33,7 +33,7 @@ import org.apache.poi.ss.usermodel.*;
 
 public class LolStats {
     private static LazyList<Champs> champs;
-    private static LazyList<Players> players;// = Players.getAllPlayers();
+    private static LazyList<Players> players;
     
 	public static void main(String[] args) throws IOException {
             final String delCMD = "netsh advfirewall firewall delete rule name=\"MYSQL\" protocol=tcp localport=3306";
@@ -109,24 +109,7 @@ public class LolStats {
                     if(line.equals("1")){
                         dataEntry(player.getSummonerName());
                     } else if (line.equals("2")){
-                        boolean innerAccepted = false;
-                        while(!innerAccepted){
-                            System.out.print("Enter PlayerName for detailed stats view: ");
-                            playerName = input.nextLine();
-                            if(containsName(players, playerName)){
-                                SpecificStats statsPage = new SpecificStats(playerName, player.getSummonerName());
-                                try{
-                                    statsPage.doStatsForOnePlayer();
-                                }
-                                catch (IOException e){
-                                    System.out.println("The stats file may be currently open. Make sure that it is closed");
-                                    System.out.print("Press Enter to continue");
-                                    new Scanner(System.in).nextLine();
-                                    openingMenu(player);
-                                }
-                                innerAccepted = true;
-                            }
-                        }
+                        startSpecificStats(player);
                     } else if(line.equals("3")){
                         boolean innerAccepted = false;
                         while(!innerAccepted){
@@ -599,6 +582,30 @@ public class LolStats {
                 gameinfo.setDescription(data);
                 
                 gameinfo.saveIt();
+            }
+        }
+        
+        
+        private static void startSpecificStats(Players player){
+            Scanner input = new Scanner(System.in);
+            String playerName;
+            boolean innerAccepted = false;
+            while(!innerAccepted){
+                System.out.print("Enter PlayerName for detailed stats view: ");
+                playerName = input.nextLine();
+                if(containsName(players, playerName)){
+                    SpecificStats statsPage = new SpecificStats(playerName, player.getSummonerName());
+                    try{
+                        statsPage.doStatsForOnePlayer();
+                    } catch (IOException e){
+                        System.out.println("The stats file may be currently open. Make sure that it is closed");
+                        System.out.print("Press Enter to continue");
+                        new Scanner(System.in).nextLine();
+                        //openingMenu(player);
+                        startSpecificStats(player);
+                    }
+                    innerAccepted = true;
+                }
             }
         }
         
