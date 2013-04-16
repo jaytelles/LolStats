@@ -582,8 +582,7 @@ public class LolStats {
                     } catch (IOException e){
                         System.out.println("The stats file may be currently open. Make sure that it is closed");
                         System.out.print("Press Enter to continue");
-                        new Scanner(System.in).nextLine();
-                        //openingMenu(player);
+                        input.nextLine();
                         startSpecificStats(player);
                     }
                     innerAccepted = true;
@@ -609,7 +608,7 @@ public class LolStats {
                         System.out.println("The stats file may be currently open. Make sure that it is closed");
                         System.out.print("Press Enter to continue");
                         input.nextLine();
-                        openingMenu(player);
+                        startGeneralStats(player);
                     }
                 }
                 innerAccepted = true;
