@@ -80,7 +80,7 @@ public class LolStats {
                 Scanner input = new Scanner(System.in);
                 String line;
                 boolean accepted = false;
-                boolean innerAccepted = false;
+                
                 String playerName;
                 
                 System.out.println("1. Enter Stats for a game");
@@ -90,16 +90,19 @@ public class LolStats {
                     System.out.println("4. Enter new champ");
                     System.out.println("5. Add a new player");
                 }
+                System.out.println("Quit to end");
                 
                 
                 while(!accepted){
                     System.out.print("\tEnter your choice: ");
                     line = input.nextLine();
+                    accepted = false;
+                    //innerAccepted = false;
                     
                     if(line.equals("1")){
                         dataEntry(username);
-                        accepted = true;
                     } else if (line.equals("2")){
+                        boolean innerAccepted = false;
                         while(!innerAccepted){
                             System.out.print("Enter PlayerName for detailed stats view: ");
                             playerName = input.nextLine();
@@ -114,11 +117,12 @@ public class LolStats {
                                     new Scanner(System.in).nextLine();
                                     openingMenu(username);
                                 }
+                                innerAccepted = true;
                             }
-                            innerAccepted = true;
                         }
-                        accepted = true;
+                        //accepted = true;
                     } else if(line.equals("3")){
+                        boolean innerAccepted = false;
                         while(!innerAccepted){
                             System.out.print("Enter PlayerName for general stats view: ");
                             playerName = input.nextLine();
@@ -136,8 +140,9 @@ public class LolStats {
                             }
                             innerAccepted = true;
                         }
-                        accepted = true;
+                        //accepted = true;
                     } else if (line.equals("4") && username.equalsIgnoreCase("lolshoppip")){
+                        boolean innerAccepted = false;
                         while(!innerAccepted){
                             System.out.print("Enter new champ: ");
                             String newname1 = input.nextLine();
@@ -154,6 +159,7 @@ public class LolStats {
                         }
                         accepted = true;
                     }  else if(line.equals("5") && username.equalsIgnoreCase("lolshoppip")){
+                        boolean innerAccepted = false;
                         while(!innerAccepted){
                             System.out.print("Enter First Name: ");
                             String firstName1 = input.nextLine();
@@ -184,8 +190,10 @@ public class LolStats {
                                 }
                             }                            
                         }
+                    } else if(line.equalsIgnoreCase("quit")||line.equalsIgnoreCase("exit")){
+                        accepted = true;
                     }
-                    accepted = true;
+                    //accepted = true;
                 }
         }
         
