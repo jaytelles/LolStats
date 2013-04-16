@@ -6,7 +6,7 @@ import DatabaseInterfaces.Gameinfo;
 
 /**
  * 
- * @author NRDT
+ * @author NRDT-
  * 
  * This class contains many segments of repeated code. The point of this is to 
  * put a layer on top of SQL statements that a programmer may or may not get 
@@ -17,7 +17,7 @@ public class RecordCruncher{
     public static ArrayList<Gameinfo> filterPlayers(LazyList<Gameinfo> games, String summonerName){
         ArrayList<Gameinfo> filteredList = new ArrayList<>();
         for(int k=0; k<games.size(); k++){
-            if(games.get(k).getPlayerName().equals(summonerName)){
+            if(games.get(k).getPlayerName().equalsIgnoreCase(summonerName)){
                 filteredList.add(games.get(k));
             }
         }
@@ -27,7 +27,7 @@ public class RecordCruncher{
     public static ArrayList<Gameinfo> filterPlayers(ArrayList<Gameinfo> games, String summonerName){
         ArrayList<Gameinfo> filteredList = new ArrayList<>();
         for(int k=0; k<games.size(); k++){
-            if(games.get(k).getPlayerName().equals(summonerName)){
+            if(games.get(k).getPlayerName().equalsIgnoreCase(summonerName)){
                 filteredList.add(games.get(k));
             }
         }
@@ -79,7 +79,7 @@ public class RecordCruncher{
     public static ArrayList<Gameinfo> filterUsers(LazyList<Gameinfo> games, String submitter){
          ArrayList<Gameinfo> filteredList = new ArrayList<>();
          for(int k=0; k<games.size(); k++){
-             if(games.get(k).getSubmitterName().equals(submitter)){
+             if(games.get(k).getSubmitterName().equalsIgnoreCase(submitter)){
                  filteredList.add(games.get(k));
              }
          }
