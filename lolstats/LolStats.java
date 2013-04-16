@@ -100,8 +100,6 @@ public class LolStats {
                     System.out.println("6. Make a player a mod/super");
                 }
                 System.out.println("Quit|Exit to terminate this runtime instance");
-                System.out.println("mod status of " + player.getSummonerName() + ": "+ player.getModStatus());
-                System.out.println("super status of " + player.getSummonerName() + ": "+ player.getSuperStatus());
                  
                 while(!accepted){
                     System.out.print("\tEnter your choice: ");
@@ -287,17 +285,6 @@ public class LolStats {
                }
            }
            accepted = false;     
-            
-            /*while(!accepted){
-                System.out.print("Enter Your Summoner Name: ");
-                playerName = input.nextLine();
-                if(containsName(players, playerName)){
-                    accepted = true;
-                    gameinfo.setPlayerName(playerName);
-                }   
-            }
-            accepted = false;*/
-           gameinfo.setPlayerName(username);
 
             while(!accepted){
                 System.out.print("Enter your champion: ");
@@ -444,6 +431,7 @@ public class LolStats {
             gameinfo.setDescription(data);
 
             gameinfo.setSubmitterName(username);
+            gameinfo.setPlayerName(username);
             gameinfo.setGameNumber(gameNumber);
 	    gameinfo.saveIt();
 	    mapinfo.saveIt();
