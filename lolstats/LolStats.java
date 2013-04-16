@@ -111,24 +111,7 @@ public class LolStats {
                     } else if (line.equals("2")){
                         startSpecificStats(player);
                     } else if(line.equals("3")){
-                        boolean innerAccepted = false;
-                        while(!innerAccepted){
-                            System.out.print("Enter PlayerName for general stats view: ");
-                            playerName = input.nextLine();
-                            if(containsName(players, playerName)){
-                                GeneralStats genStatsPage = new GeneralStats(playerName, player.getSummonerName());
-                                try{
-                                    genStatsPage.doGeneralStats();
-                                }
-                                catch (IOException e){
-                                    System.out.println("The stats file may be currently open. Make sure that it is closed");
-                                    System.out.print("Press Enter to continue");
-                                    new Scanner(System.in).nextLine();
-                                    openingMenu(player);
-                                }
-                            }
-                            innerAccepted = true;
-                        }
+                        startGeneralStats(player);
                     } else if(line.equals("4") && player.getModStatus().equalsIgnoreCase("yes")){
                         boolean innerAccepted = false;
                         while(!innerAccepted){
@@ -605,6 +588,31 @@ public class LolStats {
                     }
                     innerAccepted = true;
                 }
+            }
+        }
+        
+        private static void startGeneralStats(Players player){
+            boolean innerAccepted = false;
+            String playerName;
+            Scanner input = new Scanner(System.in);
+            while(!innerAccepted){
+                
+                System.out.print("Enter PlayerName for general stats view: ");
+                playerName = input.nextLine();
+                if(containsName(players, playerName)){
+                    
+                    GeneralStats genStatsPage = new GeneralStats(playerName, player.getSummonerName());
+                    try{
+                        genStatsPage.doGeneralStats();
+                    } catch (IOException e){
+                        
+                        System.out.println("The stats file may be currently open. Make sure that it is closed");
+                        System.out.print("Press Enter to continue");
+                        input.nextLine();
+                        openingMenu(player);
+                    }
+                }
+                innerAccepted = true;
             }
         }
         
