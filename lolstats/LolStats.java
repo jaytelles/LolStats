@@ -94,9 +94,9 @@ public class LolStats {
                 
                 if(player.getModStatus().equalsIgnoreCase("yes")){
                     System.out.println("4. Add a new player");
-                    System.out.println("5. Enter new champ");
                 }
                 if(player.getSuperStatus().equalsIgnoreCase("yes")){
+                    System.out.println("5. Enter new champ");
                     System.out.println("6. Make a player a mod/super");
                 }
                 System.out.println("Quit|Exit to terminate this runtime instance");
@@ -172,7 +172,7 @@ public class LolStats {
                                 }
                             }                            
                         }
-                    } else if (line.equals("5") &&  player.getModStatus().equalsIgnoreCase("yes")){
+                    } else if (line.equals("5") &&  player.getSuperStatus().equalsIgnoreCase("yes")){
                         boolean innerAccepted = false;
                         while(!innerAccepted){
                             System.out.print("Enter new champ: ");
@@ -584,8 +584,7 @@ public class LolStats {
                 gameinfo.saveIt();
             }
         }
-        
-        
+           
         private static void startSpecificStats(Players player){
             Scanner input = new Scanner(System.in);
             String playerName;
