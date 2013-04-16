@@ -46,6 +46,7 @@ public class LolStats {
             //Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/test", "root", "toor");
                 
             players = Players.getAllPlayers();
+            champs = Champs.getAllChamps();
             String username = userLogin();
             openingMenu(username);
                   
@@ -148,7 +149,19 @@ public class LolStats {
                                 innerAccepted = true;
                                 Champs champ = new Champs();
                                 champ.setName(newname1);
-                                champ.saveIt();
+                                
+                                boolean contained = false;
+                                for(int k=0; k<champs.size()&&!contained; k++){
+                                    if(champs.get(k).getName().equalsIgnoreCase(champ.getName())){
+                                        contained = true;
+                                    }   
+                                }
+                               
+                                if(!contained){
+                                    champ.saveIt();
+                                } else {
+                                    System.out.println("Champion already contained in table");
+                                }
                             } else {
                                 System.out.println("Names didn't match. Try again.");
                             }
