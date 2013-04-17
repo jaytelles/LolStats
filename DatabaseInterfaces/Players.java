@@ -8,6 +8,7 @@ public class Players extends Model{
     private String summonerName;
     private String modStatus;
     private String superStatus;
+    private String password;
     
     
     public void setFirstName(String firstName){
@@ -32,11 +33,16 @@ public class Players extends Model{
         }
     }
     
-    private void setSuperStatus(String status){
+    public void setSuperStatus(String status){
         if(status.equalsIgnoreCase("Yes")||status.equalsIgnoreCase("No")){
             superStatus = status;
             this.set("SuperStatus",this.superStatus);
         }
+    }
+    
+    public void setPassword(String pw){
+        this.password = pw;
+        this.set("Password",this.password);
     }
     
     public static LazyList<Players> getAllPlayers(){
@@ -61,5 +67,9 @@ public class Players extends Model{
     
     public String getSuperStatus(){
         return (String)this.get("SuperStatus");
+    }
+    
+    public String getPassword(){
+        return (String)this.get("Password");
     }
 }
