@@ -115,14 +115,11 @@ public class LolStats {
                     } else if(line.equals("4") && player.getModStatus().equalsIgnoreCase("yes")){
                         createNewPlayer();
                     } else if (line.equals("5") &&  player.getSuperStatus().equalsIgnoreCase("yes")){
-                        
+                        createNewChamp();
                     } else if(line.equalsIgnoreCase("6") && player.getSuperStatus().equalsIgnoreCase("Yes")){
                         System.out.println("here");
-                    }
-                    
-                    
-                    
-                    else if(line.equalsIgnoreCase("quit")||line.equalsIgnoreCase("exit")){
+                        //modifyPermissions(player);
+                    } else if(line.equalsIgnoreCase("quit")||line.equalsIgnoreCase("exit")){
                         accepted = true;
                     }
                 }
@@ -595,32 +592,33 @@ public class LolStats {
         
         private static void createNewChamp(){
             boolean innerAccepted = false;
-                        while(!innerAccepted){
-                            System.out.print("Enter new champ: ");
-                            String newname1 = input.nextLine();
-                            System.out.print("Confirm new champ: ");
-                            String newname2 = input.nextLine();
-                            if(newname1.equals(newname2)){
-                                innerAccepted = true;
-                                Champs champ = new Champs();
-                                champ.setName(newname1);
+            Scanner input = new Scanner(System.in);
+            while(!innerAccepted){
+                System.out.print("Enter new champ: ");
+                String newname1 = input.nextLine();
+                System.out.print("Confirm new champ: ");
+                String newname2 = input.nextLine();
+                if(newname1.equals(newname2)){
+                    innerAccepted = true;
+                    Champs champ = new Champs();
+                    champ.setName(newname1);
                                 
-                                boolean contained = false;
-                                for(int k=0; k<champs.size()&&!contained; k++){
-                                    if(champs.get(k).getName().equalsIgnoreCase(champ.getName())){
-                                        contained = true;
-                                    }   
-                                }
+                    boolean contained = false;
+                    for(int k=0; k<champs.size()&&!contained; k++){
+                        if(champs.get(k).getName().equalsIgnoreCase(champ.getName())){
+                            contained = true;
+                        }   
+                    }
                                
-                                if(!contained){
-                                    champ.saveIt();
-                                } else {
-                                    System.out.println("Champion already contained in table");
-                                }
-                            } else {
-                                System.out.println("Names didn't match. Try again.");
-                            }
-                        }
+                    if(!contained){
+                        champ.saveIt();
+                    } else {
+                        System.out.println("Champion already contained in table");
+                    }
+                } else {
+                    System.out.println("Names didn't match. Try again.");
+                }
+            }
         }
         
         public static boolean isNumerical(String input){
