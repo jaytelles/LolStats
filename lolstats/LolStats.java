@@ -111,7 +111,6 @@ public class LolStats {
         public static void openingMenu(Players player){
                 Scanner input = new Scanner(System.in);
                 String line;
-                String playerName;
                 boolean accepted = false;
                 
                 System.out.println("1. Enter Stats for a game");
@@ -154,8 +153,6 @@ public class LolStats {
         public static void dataEntry(String username){ 
             ArrayList<String> roles = new ArrayList<>();
             Scanner input = new Scanner(System.in);
-	    players = Players.getAllPlayers();
-            champs = Champs.getAllChamps();
             Gamemapinfos mapinfo = new Gamemapinfos();
             Gameinfo gameinfo = new Gameinfo();
             String data;
