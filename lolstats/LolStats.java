@@ -130,7 +130,7 @@ public class LolStats {
                         createNewChamp();
                     } else if(line.equalsIgnoreCase("6") && player.getSuperStatus().equalsIgnoreCase("Yes")){
                         System.out.println("here");
-                        //modifyPermissions(player);
+                        modifyPermissions();
                     } else if(line.equalsIgnoreCase("quit")||line.equalsIgnoreCase("exit")){
                         accepted = true;
                     }
@@ -333,11 +333,18 @@ public class LolStats {
 	    }
 	    accepted = false;
             
+            while(!accepted){
+                System.out.print("Enter Description: ");
+                data = input.nextLine();
+                
+                if(data.length()<256){
+                    accepted = true;
+                    gameinfo.setDescription(data);
+                } else {
+                    System.out.println("Description  is longer than 256 characters");
+                }
+            }
             
-            System.out.print("Enter Description: ");
-            data = input.nextLine();
-            gameinfo.setDescription(data);
-
             gameinfo.setSubmitterName(username);
             gameinfo.setPlayerName(username);
             gameinfo.setGameNumber(gameNumber);
@@ -558,47 +565,51 @@ public class LolStats {
         }
         
         private static void createNewPlayer(){
-            boolean innerAccepted = false;
+            boolean accepted = false;
             Scanner input = new Scanner(System.in);
-            while(!innerAccepted){
+            Players player = new Players();
+            
+            while(!accepted){
                 System.out.print("Enter First Name: ");
                 String firstName1 = input.nextLine();
                 System.out.print("Confirm First Name: ");
                 String firstName2 = input.nextLine();
                            
                 if(firstName1.equals(firstName2)){
-                    System.out.print("Enter Last Name: ");
-                    String lastName1 = input.nextLine();
-                    System.out.print("Confirm Last Name: ");
-                    String lastName2 = input.nextLine();
-                    if(lastName1.equals(lastName2)){
-                        System.out.print("Enter Summoner Name: ");
-                        String summoner1 = input.nextLine();
-                        System.out.print("Confirm Summoner Name: ");
-                        String summoner2 = input.nextLine();
-                                    
-                        if(summoner1.equals(summoner2)){
-                            Players createdPlayer = new Players();
-                            createdPlayer.setFirstName(firstName1);
-                            createdPlayer.setLastName(lastName1);
-                            createdPlayer.setSummonerName(summoner1);
-          
-                            boolean contained = false;
-                            for(int k=0; k<players.size()&&!contained; k++){
-                                if(players.get(k).getSummonerName().equalsIgnoreCase(createdPlayer.getSummonerName())){
-                                    contained = true;
-                                }
-                            }
-                                        
-                            if(!contained){
-                                innerAccepted = true;
-                                createdPlayer.saveIt();
-                            } else {
-                                System.out.println("That summoner name is already contained in this table. \nAre you sure you typed in the correct name?");
-                            }
-                        }
+                    player.setFirstName(firstName1);
+                    accepted = true;
+                }
+            }
+            accepted = false;
+            
+            while(!accepted){
+                System.out.print("Enter Last Name: ");
+                String lastName1 = input.nextLine();
+                System.out.print("Confirm Last Name: ");
+                String lastName2 = input.nextLine();
+                
+                if(lastName1.equals(lastName2)){
+                    player.setLastName(lastName1);
+                    accepted = true;
+                }
+            }
+            accepted = false;
+            
+            while(!accepted){
+                System.out.print("Enter Summoner Name: ");
+                String username1 = input.nextLine();
+                System.out.print("Confirm Summoner Name: ");
+                String username2 = input.nextLine();
+                
+                if(username1.equals(username2)){
+                    if(!containsName(players, username1)){                    
+                        player.setSummonerName(username1);
+                        player.saveIt();
+                    } else {
+                        System.out.println("Summoner name already exists");
                     }
-                }                            
+                    accepted = true;
+                }
             }
         }
         
@@ -630,6 +641,13 @@ public class LolStats {
                 } else {
                     System.out.println("Names didn't match. Try again.");
                 }
+            }
+        }
+        
+        private static void modifyPermissions(){
+            Scanner input = new Scanner(System.in);
+            for(int k=0; k<players.size(); k++){
+                System.out.println(k + ": " + players.get(k).getSummonerName());
             }
         }
         
