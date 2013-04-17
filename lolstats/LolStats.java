@@ -48,6 +48,18 @@ public class LolStats {
             players = Players.getAllPlayers();
             champs = Champs.getAllChamps();
             Players player = userLogin();
+            if(player.getSummonerName().equalsIgnoreCase("blindzubat")){
+                System.out.println("LOOKS LIKE OP DELIVERED");
+                System.out.println("LOOKS LIKE OP DELIVERED");
+                System.out.println("LOOKS LIKE OP DELIVERED");
+                System.out.println("LOOKS LIKE OP DELIVERED");
+                System.out.println("LOOKS LIKE OP DELIVERED");
+                System.out.println("LOOKS LIKE OP DELIVERED");
+                System.out.println("LOOKS LIKE OP DELIVERED");
+                System.out.println("LOOKS LIKE OP DELIVERED");
+                System.out.println("LOOKS LIKE OP DELIVERED");
+                System.out.println("LOOKS LIKE OP DELIVERED");
+            }
             openingMenu(player);
                   
             /*String playerName3 = "lolshoppip";
