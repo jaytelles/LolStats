@@ -113,76 +113,9 @@ public class LolStats {
                     } else if(line.equals("3")){
                         startGeneralStats(player);
                     } else if(line.equals("4") && player.getModStatus().equalsIgnoreCase("yes")){
-                        boolean innerAccepted = false;
-                        while(!innerAccepted){
-                            System.out.print("Enter First Name: ");
-                            String firstName1 = input.nextLine();
-                            System.out.print("Confirm First Name: ");
-                            String firstName2 = input.nextLine();
-                            
-                            if(firstName1.equals(firstName2)){
-                                System.out.print("Enter Last Name: ");
-                                String lastName1 = input.nextLine();
-                                System.out.print("Confirm Last Name: ");
-                                String lastName2 = input.nextLine();
-                                
-                                if(lastName1.equals(lastName2)){
-                                    System.out.print("Enter Summoner Name: ");
-                                    String summoner1 = input.nextLine();
-                                    System.out.print("Confirm Summoner Name: ");
-                                    String summoner2 = input.nextLine();
-                                    
-                                    if(summoner1.equals(summoner2)){
-                                        innerAccepted = true;
-                                        Players createdPlayer = new Players();
-                                        createdPlayer.setFirstName(firstName1);
-                                        createdPlayer.setLastName(lastName1);
-                                        createdPlayer.setSummonerName(summoner1);
-                                        
-                                        boolean contained = false;
-                                        for(int k=0; k<players.size()&&!contained; k++){
-                                            if(players.get(k).getSummonerName().equalsIgnoreCase(createdPlayer.getSummonerName())){
-                                                contained = true;
-                                            }
-                                        }
-                                        
-                                        if(!contained){
-                                            createdPlayer.saveIt();
-                                        } else {
-                                            System.out.println("That summoner name is already contained in this table. \nAre you sure you typed in the correct name?");
-                                        }
-                                    }
-                                }
-                            }                            
-                        }
+                        createNewPlayer();
                     } else if (line.equals("5") &&  player.getSuperStatus().equalsIgnoreCase("yes")){
-                        boolean innerAccepted = false;
-                        while(!innerAccepted){
-                            System.out.print("Enter new champ: ");
-                            String newname1 = input.nextLine();
-                            System.out.print("Confirm new champ: ");
-                            String newname2 = input.nextLine();
-                            if(newname1.equals(newname2)){
-                                innerAccepted = true;
-                                Champs champ = new Champs();
-                                champ.setName(newname1);
-                                
-                                boolean contained = false;
-                                for(int k=0; k<champs.size()&&!contained; k++){
-                                    if(champs.get(k).getName().equalsIgnoreCase(champ.getName())){
-                                        contained = true;
-                                    }   
-                                }
-                               
-                                if(!contained){
-                                    champ.saveIt();
-                                } else {
-                                    System.out.println("Champion already contained in table");
-                                }
-                            } else {
-                                System.out.println("Names didn't match. Try again.");
-                            }
-                        }
+                        
                     } else if(line.equalsIgnoreCase("6") && player.getSuperStatus().equalsIgnoreCase("Yes")){
                         System.out.println("here");
                     }
@@ -613,6 +546,81 @@ public class LolStats {
                 }
                 innerAccepted = true;
             }
+        }
+        
+        private static void createNewPlayer(){
+            boolean innerAccepted = false;
+            Scanner input = new Scanner(System.in);
+            while(!innerAccepted){
+                System.out.print("Enter First Name: ");
+                String firstName1 = input.nextLine();
+                System.out.print("Confirm First Name: ");
+                String firstName2 = input.nextLine();
+                           
+                if(firstName1.equals(firstName2)){
+                    System.out.print("Enter Last Name: ");
+                    String lastName1 = input.nextLine();
+                    System.out.print("Confirm Last Name: ");
+                    String lastName2 = input.nextLine();
+                    if(lastName1.equals(lastName2)){
+                        System.out.print("Enter Summoner Name: ");
+                        String summoner1 = input.nextLine();
+                        System.out.print("Confirm Summoner Name: ");
+                        String summoner2 = input.nextLine();
+                                    
+                        if(summoner1.equals(summoner2)){
+                            Players createdPlayer = new Players();
+                            createdPlayer.setFirstName(firstName1);
+                            createdPlayer.setLastName(lastName1);
+                            createdPlayer.setSummonerName(summoner1);
+          
+                            boolean contained = false;
+                            for(int k=0; k<players.size()&&!contained; k++){
+                                if(players.get(k).getSummonerName().equalsIgnoreCase(createdPlayer.getSummonerName())){
+                                    contained = true;
+                                }
+                            }
+                                        
+                            if(!contained){
+                                innerAccepted = true;
+                                createdPlayer.saveIt();
+                            } else {
+                                System.out.println("That summoner name is already contained in this table. \nAre you sure you typed in the correct name?");
+                            }
+                        }
+                    }
+                }                            
+            }
+        }
+        
+        private static void createNewChamp(){
+            boolean innerAccepted = false;
+                        while(!innerAccepted){
+                            System.out.print("Enter new champ: ");
+                            String newname1 = input.nextLine();
+                            System.out.print("Confirm new champ: ");
+                            String newname2 = input.nextLine();
+                            if(newname1.equals(newname2)){
+                                innerAccepted = true;
+                                Champs champ = new Champs();
+                                champ.setName(newname1);
+                                
+                                boolean contained = false;
+                                for(int k=0; k<champs.size()&&!contained; k++){
+                                    if(champs.get(k).getName().equalsIgnoreCase(champ.getName())){
+                                        contained = true;
+                                    }   
+                                }
+                               
+                                if(!contained){
+                                    champ.saveIt();
+                                } else {
+                                    System.out.println("Champion already contained in table");
+                                }
+                            } else {
+                                System.out.println("Names didn't match. Try again.");
+                            }
+                        }
         }
         
         public static boolean isNumerical(String input){
