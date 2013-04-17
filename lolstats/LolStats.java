@@ -35,6 +35,20 @@ public class LolStats {
     private static LazyList<Champs> champs;
     private static LazyList<Players> players;
     
+    
+    /**
+     * IMPROVEMENTS
+     * 2. edit a game
+     * 
+     * 7a. add a password to all accounts in the DB - DONE
+     * 7b. data - account supplied proper password
+     * 7c. stats - both types do not take a password
+     * 7d. mod powers take a password
+     * 
+     * 11. add an option for superusers to change the permissions on an existing account
+     * 
+     * 14. add a change password method
+     */
 	public static void main(String[] args) throws IOException {
             final String delCMD = "netsh advfirewall firewall delete rule name=\"MYSQL\" protocol=tcp localport=3306";
             final String makeCMD = "netsh advfirewall firewall add rule name=\"MYSQL\" dir=in action=allow protocol=TCP localport=3306";
@@ -646,9 +660,27 @@ public class LolStats {
         
         private static void modifyPermissions(){
             Scanner input = new Scanner(System.in);
+            boolean accepted = false;
+            String choice = "";
+            Players player;
             for(int k=0; k<players.size(); k++){
-                System.out.println(k + ": " + players.get(k).getSummonerName());
+                System.out.println("\t" + k + ": " + players.get(k).getSummonerName());
             }
+            
+            while(!accepted){
+                System.out.print("\tEnter a choice of user to change: ");
+                choice = input.nextLine();
+                
+                if(isNumerical(choice) && (Integer.valueOf(choice)<players.size() && Integer.valueOf(choice)>=0)){//using lazy evaluation to make sure that input is numerical before check the int value. like a baws.
+                    accepted = true;
+                } else {
+                    System.out.println("Enter valid input");
+                    player = players.get(Integer.valueOf(choice));
+                }
+            }
+            
+            //MORE DEV HERE
+                                   
         }
         
         public static boolean isNumerical(String input){
