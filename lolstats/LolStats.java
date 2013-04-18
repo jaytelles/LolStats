@@ -157,7 +157,6 @@ public class LolStats {
             Gameinfo gameinfo = new Gameinfo();
             String data;
             int intdata;
-            int gameNumber = getLastGameNumber()+1;
             int kills = -1;
             boolean accepted = false;
             boolean teamGotFirstBlood = false;
@@ -356,23 +355,23 @@ public class LolStats {
                 }
             }
             
+            mapinfo.saveIt();
             gameinfo.setSubmitterName(username);
             gameinfo.setPlayerName(username);
-            gameinfo.setGameNumber(gameNumber);
+            gameinfo.setGameNumber((int)Long.valueOf(String.valueOf(mapinfo.getId())).longValue());
 	    gameinfo.saveIt();
-	    mapinfo.saveIt();
-            enterTeammates(gameNumber, gameinfo.getNumTeammates(), teamGotFirstBlood, personallyGotFirstBlood, gameinfo.getGameOutcome(), gameinfo.getRole(), roles);
+            enterTeammates((int)Long.valueOf(String.valueOf(mapinfo.getId())).longValue(), gameinfo.getNumTeammates(), teamGotFirstBlood, personallyGotFirstBlood, gameinfo.getGameOutcome(), gameinfo.getRole(), roles);
         }
        
         private static void enterTeammates(int gameNumber, int numTeammates, boolean teamGotFirstBlood, boolean personallyGotFirstBlood, 
                                             String gameOutcome, String username, ArrayList<String> roles){
-            ArrayList<String> teammates = new ArrayList<String>();
+            ArrayList<String> teammates = new ArrayList<>();
             teammates.add(username);
             Scanner input = new Scanner(System.in);
             Gameinfo gameinfo;
-            String data = "";
+            String data;
             int kills = -1;
-            int intdata = -1;
+            int intdata;
             boolean accepted = false;
             boolean firstBloodTaken = personallyGotFirstBlood;
             
@@ -733,14 +732,5 @@ public class LolStats {
                 }
             }
             return replacedString;
-        }
-        
-        public static int getLastGameNumber(){
-            LazyList<Gamemapinfos> list = Gamemapinfos.where("gamenumber > 0");
-            if(list.size()<=0){
-                return 1;
-            } else {
-                return list.get(list.size()-1).getGameNumber();
-            }
         }
 }
