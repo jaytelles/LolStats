@@ -768,22 +768,5 @@ public class LolStats {
                 }
             }
             return false;
-        }
-        
-        public static String fixInput(String inputString){//not satisfied
-            if(inputString==null || inputString.length()==0){
-                return inputString;
-            } 
-            inputString = inputString.toLowerCase().trim();//this makes the whole body of the method necessary for runtime data entry validation
-            String replacedString = (inputString.substring(0,1)).toUpperCase().concat(inputString.substring(1));;
-                        
-            for(int k=0; k<replacedString.length(); k++){           
-                if(replacedString.charAt(k)==' '){
-                    replacedString = replacedString.substring(0, k+1);
-                    replacedString = replacedString.concat(String.valueOf(inputString.charAt(k+1)).toUpperCase());
-                    replacedString = replacedString.concat(inputString.substring(k+2));
-                }
-            }
-            return replacedString;
-        }
+        }   
 }
