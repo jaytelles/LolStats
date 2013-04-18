@@ -35,20 +35,13 @@ import org.apache.poi.ss.usermodel.*;
 public class LolStats {
     private static LazyList<Champs> champs;
     private static LazyList<Players> players;
-    
-    
+
     /**
      * IMPROVEMENTS
      * 2. edit a game
-     * 
-     * 7a. add a password to all accounts in the DB - DONE
-     * 7b. data - account supplied proper password
-     * 7c. stats - both types do not take a password
-     * 7d. mod powers take a password
-     * 
-     * 11. add an option for superusers to change the permissions on an existing account
-     * 
+     *
      * 14. add a change password method
+     * 15. add an output for description
      */
 	public static void main(String[] args) throws IOException {
             final String delCMD = "netsh advfirewall firewall delete rule name=\"MYSQL\" protocol=tcp localport=3306";
