@@ -720,11 +720,19 @@ public class LolStats {
             accepted = false;
             if(choice.equalsIgnoreCase("Yes")){
                 player.setModStatus("Yes");
-                player.saveIt();
+                boolean confirm = player.saveIt();
+                
+                while(!confirm){
+                    confirm = player.saveIt();
+                }
             } else if(choice.equalsIgnoreCase("No")){
                 player.setModStatus("No");
-                player.saveIt();
-            }
+                boolean confirm = player.saveIt();
+                
+                while(!confirm){
+                    confirm = player.saveIt();
+                }
+            }           
             
             
             while(!accepted){
@@ -736,10 +744,18 @@ public class LolStats {
             }
             if(choice.equalsIgnoreCase("Yes")){
                 player.setSuperStatus("Yes");
-                player.saveIt();
+                boolean confirm = player.saveIt();
+                
+                while(!confirm){
+                    confirm = player.saveIt();
+                }
             } else if(choice.equalsIgnoreCase("No")){
-                player.setModStatus("No");
-                player.saveIt();
+                player.setSuperStatus("No");
+                boolean confirm = player.saveIt();
+                
+                while(!confirm){
+                    confirm = player.saveIt();
+                }
             }  
         }
         
