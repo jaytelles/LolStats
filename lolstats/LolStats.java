@@ -15,6 +15,7 @@ import java.io.IOException;
 
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.LazyList;
+import org.javalite.activejdbc.InitException;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -56,36 +57,41 @@ public class LolStats {
             Runtime.getRuntime().exec(makeCMD);
             
             
-            Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://lolstats.no-ip.org/test", "remoteuser", "remoteuserpassword");
+            try{
+                Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://lolstats.no-ip.org/test", "remoteuser", "remoteuserpassword");
             //Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/test", "root", "toor");
                 
-            players = Players.getAllPlayers();
-            champs = Champs.getAllChamps();
-            Players player = userLogin();
-            if(player.getSummonerName().equalsIgnoreCase("blindzubat")){
-                System.out.println("LOOKS LIKE OP DELIVERED");
-                System.out.println("LOOKS LIKE OP DELIVERED");
-                System.out.println("LOOKS LIKE OP DELIVERED");
-                System.out.println("LOOKS LIKE OP DELIVERED");
-                System.out.println("LOOKS LIKE OP DELIVERED");
-                System.out.println("LOOKS LIKE OP DELIVERED");
-                System.out.println("LOOKS LIKE OP DELIVERED");
-                System.out.println("LOOKS LIKE OP DELIVERED");
-                System.out.println("LOOKS LIKE OP DELIVERED");
-                System.out.println("LOOKS LIKE OP DELIVERED");
+                players = Players.getAllPlayers();
+                champs = Champs.getAllChamps();
+                Players player = userLogin();
+                if(player.getSummonerName().equalsIgnoreCase("blindzubat")){
+                    System.out.println("LOOKS LIKE OP DELIVERED");
+                    System.out.println("LOOKS LIKE OP DELIVERED");
+                    System.out.println("LOOKS LIKE OP DELIVERED");
+                    System.out.println("LOOKS LIKE OP DELIVERED");
+                    System.out.println("LOOKS LIKE OP DELIVERED");
+                    System.out.println("LOOKS LIKE OP DELIVERED");
+                    System.out.println("LOOKS LIKE OP DELIVERED");
+                    System.out.println("LOOKS LIKE OP DELIVERED");
+                    System.out.println("LOOKS LIKE OP DELIVERED");
+                    System.out.println("LOOKS LIKE OP DELIVERED");
+                }
+                openingMenu(player);
+
+                /*String playerName3 = "lolshoppip";
+                SpecificStats statsPage = new SpecificStats(playerName3);
+                statsPage.doStatsForOnePlayer();
+
+                GeneralStats gstatsPage = new GeneralStats(playerName3);
+                statsPage.doGeneralStats();*/
+                Scanner input = new Scanner(System.in);
+                System.out.print("Press Enter to finish");
+                input.nextLine();
+                Base.close();
+            } catch (InitException e){
+                System.out.println("Error 37. The System is down. The System is down. The System is down. Once you get this reference, text Jay and tell him to turn the internet on.");
             }
-            openingMenu(player);
-                  
-            /*String playerName3 = "lolshoppip";
-            SpecificStats statsPage = new SpecificStats(playerName3);
-            statsPage.doStatsForOnePlayer();
-               
-            GeneralStats gstatsPage = new GeneralStats(playerName3);
-            statsPage.doGeneralStats();*/
-            Scanner input = new Scanner(System.in);
-            System.out.print("Press Enter to finish");
-            input.nextLine();
-            Base.close();
+            
 	}
         
         public static Players userLogin(){
