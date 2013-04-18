@@ -385,12 +385,20 @@ public class LolStats {
                     System.out.println("Description  is longer than 256 characters");
                 }
             }
+            boolean confirmed = mapinfo.saveIt();
+            while(!confirmed){
+                confirmed = mapinfo.saveIt();
+            }
             
-            mapinfo.saveIt();
             gameinfo.setSubmitterName(username);
             gameinfo.setPlayerName(username);
             gameinfo.setGameNumber((int)Long.valueOf(String.valueOf(mapinfo.getId())).longValue());
-	    gameinfo.saveIt();
+            
+            confirmed = gameinfo.saveIt();
+            while(!confirmed){
+                confirmed = gameinfo.saveIt();
+            }
+            
             enterTeammates((int)Long.valueOf(String.valueOf(mapinfo.getId())).longValue(), gameinfo.getNumTeammates(), 
                     teamGotFirstBlood, personallyGotFirstBlood, gameinfo.getGameOutcome(), username, roles);
         }
@@ -555,7 +563,10 @@ public class LolStats {
                 gameinfo.setSubmitterName(username);
                 gameinfo.setDescription(data);
                 
-                gameinfo.saveIt();
+                boolean confirmed = gameinfo.saveIt();
+                while(!confirmed){
+                    confirmed = gameinfo.saveIt();
+                }
             }
         }
            
@@ -646,7 +657,10 @@ public class LolStats {
                 if(username1.equals(username2)){
                     if(!containsName(players, username1)){                    
                         player.setSummonerName(username1);
-                        player.saveIt();
+                        boolean confirmed = player.saveIt();
+                        while(!confirmed){
+                            confirmed = player.saveIt();
+                        }
                     } else {
                         System.out.println("Summoner name already exists");
                     }
@@ -676,7 +690,10 @@ public class LolStats {
                     }
                                
                     if(!contained){
-                        champ.saveIt();
+                        boolean confirmed = champ.saveIt();
+                        while(!confirmed){
+                            confirmed = champ.saveIt();
+                        }
                     } else {
                         System.out.println("Champion already contained in table");
                     }
@@ -689,6 +706,7 @@ public class LolStats {
         private static void modifyPermissions(){
             Scanner input = new Scanner(System.in);
             boolean accepted = false;
+            boolean confirm = false;
             String choice = "";
             Players player = new Players();
             for(int k=0; k<players.size(); k++){
@@ -720,15 +738,13 @@ public class LolStats {
             accepted = false;
             if(choice.equalsIgnoreCase("Yes")){
                 player.setModStatus("Yes");
-                boolean confirm = player.saveIt();
-                
+                confirm = player.saveIt();
                 while(!confirm){
                     confirm = player.saveIt();
                 }
             } else if(choice.equalsIgnoreCase("No")){
                 player.setModStatus("No");
-                boolean confirm = player.saveIt();
-                
+                confirm = player.saveIt();
                 while(!confirm){
                     confirm = player.saveIt();
                 }
@@ -744,15 +760,13 @@ public class LolStats {
             }
             if(choice.equalsIgnoreCase("Yes")){
                 player.setSuperStatus("Yes");
-                boolean confirm = player.saveIt();
-                
+                confirm = player.saveIt();
                 while(!confirm){
                     confirm = player.saveIt();
                 }
             } else if(choice.equalsIgnoreCase("No")){
                 player.setSuperStatus("No");
-                boolean confirm = player.saveIt();
-                
+                confirm = player.saveIt();
                 while(!confirm){
                     confirm = player.saveIt();
                 }
@@ -776,7 +790,10 @@ public class LolStats {
             }
             
             player.setPassword(pw1);
-            player.saveIt();
+            boolean confirmed = player.saveIt();
+            while(!confirmed){
+                confirmed = player.saveIt();
+            }
         }
         
         public static String fixInput(String inputString){//not satisfied
