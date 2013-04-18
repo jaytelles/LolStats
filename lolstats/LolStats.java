@@ -136,6 +136,7 @@ public class LolStats {
                     accepted = false;
                                         
                     if(line.equals("1")){
+                        
                         dataEntry(player.getSummonerName());
                     } else if (line.equals("2")){
                         startSpecificStats(player);
@@ -770,4 +771,21 @@ public class LolStats {
             }
             return false;
         }   
+        
+        public static boolean userLogin(Players player){
+            Scanner input = new Scanner(System.in);
+            String choice;
+            boolean accepted = false;
+            
+            for(int k=0; k<3&&!accepted; k++){
+                System.out.print("Enter your password: ");
+                choice = input.nextLine();
+                
+                if(choice.equals(player.getPassword())){
+                    accepted = true;
+                }
+            }
+            
+            return accepted;
+        }
 }
