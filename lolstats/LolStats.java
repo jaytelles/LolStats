@@ -117,6 +117,7 @@ public class LolStats {
                 boolean accepted = false;
                 boolean passwordConfirmed = false;
                 
+                System.out.println("0. Change password");
                 System.out.println("1. Enter Stats for a game");
                 System.out.println("2. Specific Stats For Player");
                 System.out.println("3. General Stats For Player");
@@ -136,7 +137,11 @@ public class LolStats {
                     accepted = false;
                                         
                     if(line.equals("0")){
-                    
+                        if(passwordConfirmed||userLogin(player)){
+                            changePassword(player);
+                        } else {
+                            System.out.println("Wrong password.");
+                        }
                     } else if(line.equals("1")){
                         if(passwordConfirmed||userLogin(player)){
                             dataEntry(player.getSummonerName());
@@ -149,21 +154,24 @@ public class LolStats {
                     } else if(line.equals("3")){
                         startGeneralStats(player);
                     } else if(line.equals("4") && player.getModStatus().equalsIgnoreCase("yes")){
-                        if(userLogin(player)){
+                        if(passwordConfirmed||userLogin(player)){
                             createNewPlayer();
+                            passwordConfirmed = true;
                         } else {
                             System.out.println("Wrong password.");
                         }
                     } else if (line.equals("5") &&  player.getSuperStatus().equalsIgnoreCase("yes")){
-                        if(userLogin(player)){
+                        if(passwordConfirmed||userLogin(player)){
                             createNewChamp();
+                            passwordConfirmed = true;
                         } else {
                             System.out.println("Wrong password.");
                         }
                     } else if(line.equalsIgnoreCase("6") && player.getSuperStatus().equalsIgnoreCase("Yes")){
                         System.out.println("here");
-                        if(userLogin(player)){
+                        if(passwordConfirmed||userLogin(player)){
                             modifyPermissions();
+                            passwordConfirmed = true;
                         } else {
                             System.out.println("Wrong password.");
                         }
@@ -738,7 +746,7 @@ public class LolStats {
         private static void changePassword(Players player){
             boolean accepted = false;
             Scanner input = new Scanner(System.in);
-            String pw1;
+            String pw1 = "";
             String pw2;
             while(!accepted){
                 System.out.print("Enter new password: ");
