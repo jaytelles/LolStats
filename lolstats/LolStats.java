@@ -56,7 +56,6 @@ public class LolStats {
             Runtime.getRuntime().exec(delCMD);
             Runtime.getRuntime().exec(makeCMD);
             
-            
             try{
                 Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://lolstats.no-ip.org/test", "remoteuser", "remoteuserpassword");                
                 players = Players.getAllPlayers();
@@ -136,19 +135,34 @@ public class LolStats {
                     accepted = false;
                                         
                     if(line.equals("1")){
-                        
-                        dataEntry(player.getSummonerName());
+                        if(userLogin(player)){
+                            dataEntry(player.getSummonerName());
+                        } else {
+                            System.out.println("Wrong password.");
+                        }
                     } else if (line.equals("2")){
                         startSpecificStats(player);
                     } else if(line.equals("3")){
                         startGeneralStats(player);
                     } else if(line.equals("4") && player.getModStatus().equalsIgnoreCase("yes")){
-                        createNewPlayer();
+                        if(userLogin(player)){
+                            createNewPlayer();
+                        } else {
+                            System.out.println("Wrong password.");
+                        }
                     } else if (line.equals("5") &&  player.getSuperStatus().equalsIgnoreCase("yes")){
-                        createNewChamp();
+                        if(userLogin(player)){
+                            createNewChamp();
+                        } else {
+                            System.out.println("Wrong password.");
+                        }
                     } else if(line.equalsIgnoreCase("6") && player.getSuperStatus().equalsIgnoreCase("Yes")){
                         System.out.println("here");
-                        modifyPermissions();
+                        if(userLogin(player)){
+                            modifyPermissions();
+                        } else {
+                            System.out.println("Wrong password.");
+                        }
                     } else if(line.equalsIgnoreCase("quit")||line.equalsIgnoreCase("exit")){
                         accepted = true;
                     }
