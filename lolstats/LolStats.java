@@ -115,6 +115,7 @@ public class LolStats {
                 Scanner input = new Scanner(System.in);
                 String line;
                 boolean accepted = false;
+                boolean passwordConfirmed = false;
                 
                 System.out.println("1. Enter Stats for a game");
                 System.out.println("2. Specific Stats For Player");
@@ -134,9 +135,12 @@ public class LolStats {
                     line = input.nextLine();
                     accepted = false;
                                         
-                    if(line.equals("1")){
-                        if(userLogin(player)){
+                    if(line.equals("0")){
+                    
+                    } else if(line.equals("1")){
+                        if(passwordConfirmed||userLogin(player)){
                             dataEntry(player.getSummonerName());
+                            passwordConfirmed = true;
                         } else {
                             System.out.println("Wrong password.");
                         }
@@ -729,6 +733,26 @@ public class LolStats {
                 player.setModStatus("No");
                 player.saveIt();
             }  
+        }
+        
+        private static void changePassword(Players player){
+            boolean accepted = false;
+            Scanner input = new Scanner(System.in);
+            String pw1;
+            String pw2;
+            while(!accepted){
+                System.out.print("Enter new password: ");
+                pw1 = input.nextLine();
+                System.out.print("Confirm password: ");
+                pw2 = input.nextLine();
+                
+                if(pw1.equals(pw2)){
+                    accepted = true;
+                }
+            }
+            
+            player.setPassword(pw1);
+            player.saveIt();
         }
         
         public static String fixInput(String inputString){//not satisfied
