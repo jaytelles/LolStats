@@ -364,7 +364,8 @@ public class LolStats {
             gameinfo.setPlayerName(username);
             gameinfo.setGameNumber((int)Long.valueOf(String.valueOf(mapinfo.getId())).longValue());
 	    gameinfo.saveIt();
-            enterTeammates((int)Long.valueOf(String.valueOf(mapinfo.getId())).longValue(), gameinfo.getNumTeammates(), teamGotFirstBlood, personallyGotFirstBlood, gameinfo.getGameOutcome(), gameinfo.getRole(), roles);
+            enterTeammates((int)Long.valueOf(String.valueOf(mapinfo.getId())).longValue(), gameinfo.getNumTeammates(), 
+                    teamGotFirstBlood, personallyGotFirstBlood, gameinfo.getGameOutcome(), username, roles);
         }
        
         private static void enterTeammates(int gameNumber, int numTeammates, boolean teamGotFirstBlood, boolean personallyGotFirstBlood, 

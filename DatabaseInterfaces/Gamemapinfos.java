@@ -3,7 +3,6 @@ package DatabaseInterfaces;
 import org.javalite.activejdbc.Model;
 
 public class Gamemapinfos extends Model{
-    private int gameNumber;
     private String placeSpawned;
     private String whoGotFirstBlood;//Them OR Us
     private String pickType;
