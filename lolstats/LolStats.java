@@ -58,9 +58,7 @@ public class LolStats {
             
             
             try{
-                Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://lolstats.no-ip.org/test", "remoteuser", "remoteuserpassword");
-            //Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://localhost/test", "root", "toor");
-                
+                Base.open("com.mysql.jdbc.Driver", "jdbc:mysql://lolstats.no-ip.org/test", "remoteuser", "remoteuserpassword");                
                 players = Players.getAllPlayers();
                 champs = Champs.getAllChamps();
                 Players player = userLogin();
@@ -664,7 +662,7 @@ public class LolStats {
             Scanner input = new Scanner(System.in);
             boolean accepted = false;
             String choice = "";
-            Players player;
+            Players player = new Players();
             for(int k=0; k<players.size(); k++){
                 System.out.println("\t" + k + ": " + players.get(k).getSummonerName());
             }
@@ -677,12 +675,61 @@ public class LolStats {
                     accepted = true;
                 } else {
                     System.out.println("Enter valid input");
-                    player = players.get(Integer.valueOf(choice));
+                    
                 }
             }
+            player = players.get(Integer.valueOf(choice));
+            System.out.println(player.getSummonerName());
+            accepted = false;
             
-            //MORE DEV HERE
-                                   
+            while(!accepted){
+                System.out.print("Enter choice for modship: ");
+                choice = input.nextLine();
+                if(choice.equalsIgnoreCase("Yes")||choice.equalsIgnoreCase("No")){
+                    accepted = true;
+                }
+            }
+            accepted = false;
+            if(choice.equalsIgnoreCase("Yes")){
+                player.setModStatus("Yes");
+                player.saveIt();
+            } else if(choice.equalsIgnoreCase("No")){
+                player.setModStatus("No");
+                player.saveIt();
+            }
+            
+            
+            while(!accepted){
+                System.out.print("Enter choice for supership: ");
+                choice = input.nextLine();
+                if(choice.equalsIgnoreCase("Yes")||choice.equalsIgnoreCase("No")){
+                    accepted = true;
+                }
+            }
+            if(choice.equalsIgnoreCase("Yes")){
+                player.setSuperStatus("Yes");
+                player.saveIt();
+            } else if(choice.equalsIgnoreCase("No")){
+                player.setModStatus("No");
+                player.saveIt();
+            }  
+        }
+        
+        public static String fixInput(String inputString){//not satisfied
+            if(inputString==null || inputString.length()==0){
+                return inputString;
+            } 
+            inputString = inputString.toLowerCase().trim();//this makes the whole body of the method necessary for runtime data entry validation
+            String replacedString = (inputString.substring(0,1)).toUpperCase().concat(inputString.substring(1));;
+                        
+            for(int k=0; k<replacedString.length(); k++){           
+                if(replacedString.charAt(k)==' '){
+                    replacedString = replacedString.substring(0, k+1);
+                    replacedString = replacedString.concat(String.valueOf(inputString.charAt(k+1)).toUpperCase());
+                    replacedString = replacedString.concat(inputString.substring(k+2));
+                }
+            }
+            return replacedString;
         }
         
         public static boolean isNumerical(String input){
