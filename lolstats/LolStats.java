@@ -94,12 +94,11 @@ public class LolStats {
                 System.out.print("Enter your summoner name: ");
                 username = input.nextLine();
                 
-                for(k=0; k<players.size(); k++){
-                    if(players.get(k).getSummonerName().equals(username)){
-                        break;
+                for(k=0; k<players.size()&&!accepted; k++){
+                    if(players.get(k).getSummonerName().equalsIgnoreCase(username)){
+                        accepted = true;;
                     }
                 }
-                accepted = true;
             }
             return players.get(k);
         }
