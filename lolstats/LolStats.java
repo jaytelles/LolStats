@@ -2,25 +2,18 @@ package lolstats;
 
 import Statistics.SpecificStats;
 import Statistics.GeneralStats;
-import Statistics.NumberCruncher;
-import Statistics.RecordCruncher;
 import DatabaseInterfaces.Champs;
 import DatabaseInterfaces.Players;
 import DatabaseInterfaces.Gameinfo;
 import DatabaseInterfaces.Gamemapinfos;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 import org.javalite.activejdbc.Base;
 import org.javalite.activejdbc.LazyList;
 import org.javalite.activejdbc.InitException;
 
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.apache.poi.ss.usermodel.*;
 
 /**improvements:
                  * 1. nicknames for summoner names for faster name entry
@@ -40,8 +33,9 @@ public class LolStats {
      * IMPROVEMENTS
      * 2. edit a game
      *
-     * 14. add a change password method
+     * 
      * 15. add an output for description
+     * 16. add a prompt for the user asking if they would like to enter their teammate's stats
      */
 	public static void main(String[] args) throws IOException {
             final String delCMD = "netsh advfirewall firewall delete rule name=\"MYSQL\" protocol=tcp localport=3306";

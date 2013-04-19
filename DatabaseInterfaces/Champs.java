@@ -1,6 +1,7 @@
 package DatabaseInterfaces;
 
-import org.javalite.activejdbc.*;
+import org.javalite.activejdbc.Model;
+import org.javalite.activejdbc.LazyList;
 
 public class Champs extends Model{
     private String name;
