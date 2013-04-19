@@ -366,6 +366,9 @@ public class LolStats {
                     System.out.println("Description  is longer than 256 characters");
                 }
             }
+            accepted = false;
+            
+            
             boolean confirmed = mapinfo.saveIt();
             while(!confirmed){
                 confirmed = mapinfo.saveIt();
@@ -380,8 +383,18 @@ public class LolStats {
                 confirmed = gameinfo.saveIt();
             }
             
-            enterTeammates((int)Long.valueOf(String.valueOf(mapinfo.getId())).longValue(), gameinfo.getNumTeammates(), 
+            while(!accepted){
+                System.out.print("Do you want to add stats for your teammates? [yes/no]: ");
+                data = input.nextLine();
+                if(data.equalsIgnoreCase("Yes")){
+                    accepted = true;
+                    enterTeammates((int)Long.valueOf(String.valueOf(mapinfo.getId())).longValue(), gameinfo.getNumTeammates(), 
                     teamGotFirstBlood, personallyGotFirstBlood, gameinfo.getGameOutcome(), username, roles);
+                    
+                } else if(data.equalsIgnoreCase("No")){
+                    accepted = true;
+                }
+            } 
         }
        
         private static void enterTeammates(int gameNumber, int numTeammates, boolean teamGotFirstBlood, boolean personallyGotFirstBlood, 

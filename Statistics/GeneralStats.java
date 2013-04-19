@@ -67,10 +67,6 @@ public class GeneralStats extends Stats{
             for(int k=0; k<teammateNames.size(); k++){
                 teammateGames = RecordCruncher.filterPlayers(games, teammateNames.get(k));
                 rowPosition = doStatsRow(sh,teammateGames,rowPosition,0,teammateGames.size(), teammateNames.get(k));
-                /*teammateGames = RecordCruncher.filterPlayers(games, teammateNames.get(k));
-                if(!teammateNames.get(k).equals(username)&&teammateGames.size()>0){
-                    rowPosition = doStatsRow(sh,teammateGames,rowPosition,0,teammateGames.size(), teammateNames.get(k));
-                }*/
             }
          }
          
