@@ -62,12 +62,6 @@ public class LolStats {
                 }
                 openingMenu(player);
 
-                /*String playerName3 = "lolshoppip";
-                SpecificStats statsPage = new SpecificStats(playerName3);
-                statsPage.doStatsForOnePlayer();
-
-                GeneralStats gstatsPage = new GeneralStats(playerName3);
-                statsPage.doGeneralStats();*/
                 Scanner input = new Scanner(System.in);
                 System.out.print("Press Enter to finish");
                 input.nextLine();

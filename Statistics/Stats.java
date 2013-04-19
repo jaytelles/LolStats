@@ -19,8 +19,8 @@ public abstract class Stats {
    
     protected int writeStatsTotalRowColumnHeader(Sheet sh, int rowPosition, int cellPosition) throws IOException{
             Row row = sh.createRow(rowPosition);
-            Cell cell = row.createCell(cellPosition);
-            cell = row.createCell(cellPosition); cellPosition++; cell.setCellValue("Total Won");
+           
+            Cell cell = row.createCell(cellPosition); cellPosition++; cell.setCellValue("Total Won");
             cell = row.createCell(cellPosition); cellPosition++; cell.setCellValue("Total Lost");
             cell = row.createCell(cellPosition); cellPosition++; cell.setCellValue("Total");
             cell = row.createCell(cellPosition); cellPosition++; cell.setCellValue("Streak");

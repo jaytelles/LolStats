@@ -1,8 +1,6 @@
 package Statistics;
 
 import DatabaseInterfaces.Gameinfo;
-import Statistics.NumberCruncher;
-import Statistics.RecordCruncher;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
