@@ -59,13 +59,19 @@ public class GeneralStats extends Stats{
          rowPosition++;
          
          ArrayList<Gameinfo> teammateGames;
-         ArrayList<String> teammateNames = RecordCruncher.findAllTeammates(Gameinfo.getAllGameinfos());
+         ArrayList<String> teammateNames = RecordCruncher.findAllTeammates(games, username);
          matchupColumns.clear();
-         matchupColumns.add("Role");
-         rowPosition = super.writeStatsRowColumnHeader(sh,rowPosition,0,matchupColumns);
-         for(int k=0; k<teammateNames.size(); k++){
-             teammateGames = RecordCruncher.filterPlayers(Gameinfo.getAllGameinfos(), teammateNames.get(k));
-             rowPosition = doStatsRow(sh,teammateGames,rowPosition,0,teammateGames.size(), teammateNames.get(k));
+         matchupColumns.add("Player");
+         if(teammateNames.size()>0){
+            rowPosition = super.writeStatsRowColumnHeader(sh,rowPosition,0,matchupColumns);
+            for(int k=0; k<teammateNames.size(); k++){
+                teammateGames = RecordCruncher.filterPlayers(games, teammateNames.get(k));
+                rowPosition = doStatsRow(sh,teammateGames,rowPosition,0,teammateGames.size(), teammateNames.get(k));
+                /*teammateGames = RecordCruncher.filterPlayers(games, teammateNames.get(k));
+                if(!teammateNames.get(k).equals(username)&&teammateGames.size()>0){
+                    rowPosition = doStatsRow(sh,teammateGames,rowPosition,0,teammateGames.size(), teammateNames.get(k));
+                }*/
+            }
          }
          
          wb.write(fos);   
