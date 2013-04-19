@@ -127,4 +127,14 @@ public class RecordCruncher{
         }
         return filteredList;
     }   
+    
+    public static ArrayList<String> findAllTeammates(ArrayList<Gameinfo> games, String username){
+        ArrayList<String> filteredList = new ArrayList<String>();
+        for(int k=0; k<games.size(); k++){
+            if(!filteredList.contains(games.get(k).getPlayerName())&&!games.get(k).getPlayerName().equals(username)){
+                filteredList.add(games.get(k).getPlayerName());
+            }
+        }
+        return filteredList;
+    }
 }
