@@ -100,7 +100,8 @@ public class LolStats {
                     }
                 }
             }
-            return players.get(k);
+            System.out.println(players.get(k).getSummonerName());
+            return players.get(k-1);
         }
         
         public static void openingMenu(Players player){
