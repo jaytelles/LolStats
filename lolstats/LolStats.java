@@ -33,9 +33,9 @@ public class LolStats {
      * IMPROVEMENTS
      * 2. edit a game
      *
-     * 
+     * ff 
      * 15. add an output for description
-     * 16. add a prompt for the user asking if they would like to enter their teammate's stats
+     * 17. 
      */
 	public static void main(String[] args) throws IOException {
             final String delCMD = "netsh advfirewall firewall delete rule name=\"MYSQL\" protocol=tcp localport=3306";
@@ -383,7 +383,7 @@ public class LolStats {
                 confirmed = gameinfo.saveIt();
             }
             
-            while(!accepted){
+            while(!accepted && gameinfo.getNumTeammates()>0){
                 System.out.print("Do you want to add stats for your teammates? [yes/no]: ");
                 data = input.nextLine();
                 if(data.equalsIgnoreCase("Yes")){
@@ -606,8 +606,8 @@ public class LolStats {
                         input.nextLine();
                         startGeneralStats(player);
                     }
-                }
-                innerAccepted = true;
+                    innerAccepted = true;
+                }  
             }
         }
         
