@@ -88,7 +88,6 @@ public class LolStats {
                     }
                 }
             }
-            System.out.println(players.get(k).getSummonerName());
             return players.get(k-1);
         }
         
@@ -169,7 +168,6 @@ public class LolStats {
             Gameinfo gameinfo = new Gameinfo();
             String data;
             int intdata;
-            int kills = -1;
             boolean accepted = false;
             boolean teamGotFirstBlood = false;
             boolean personallyGotFirstBlood = false;
@@ -270,8 +268,8 @@ public class LolStats {
 		data = input.nextLine();
                 if(!(data.equals(null)||(data.length()==0))){
                     if(isNumerical(data)){
-                        kills = Integer.valueOf(data);
-                        gameinfo.setKills(kills);
+                        intdata = Integer.valueOf(data);
+                        gameinfo.setKills(intdata);
                         data = "";
                         accepted = true;
                     }
@@ -325,7 +323,7 @@ public class LolStats {
             }
             accepted = false;
             
-            if(teamGotFirstBlood&&kills>0){
+            if(teamGotFirstBlood&&gameinfo.getKills()>0){
                 while(!accepted){
                     System.out.print("Got First Blood[Yes/No]: ");
                     data = input.nextLine();
