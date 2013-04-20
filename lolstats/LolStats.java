@@ -33,9 +33,10 @@ public class LolStats {
      * IMPROVEMENTS
      * 2. edit a game
      *
-     * ff 
+     * 
      * 15. add an output for description
-     * 17. 
+     * 17. make the champs output alphabetical
+     * 18. finish the outputs that come from gamemapinfo
      */
 	public static void main(String[] args) throws IOException {
             final String delCMD = "netsh advfirewall firewall delete rule name=\"MYSQL\" protocol=tcp localport=3306";
