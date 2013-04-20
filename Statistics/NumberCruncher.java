@@ -212,7 +212,6 @@ public class NumberCruncher {
                 sum++;
             }
             return sum;
-        }
-        
+        } 
     }
 }

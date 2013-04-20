@@ -4,6 +4,7 @@ import DatabaseInterfaces.Gameinfo;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections.*;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -75,7 +76,8 @@ public class SpecificStats extends Stats{
         ArrayList<String> matchupColumns = new ArrayList<>();
         matchupColumns.add("Role");
         matchupColumns.add("Matchup");
-            
+        
+        java.util.Collections.sort(champNames);    
         for(int k=0; k<champNames.size(); k++){
             writeStatsRowColumnHeader(sh,rowPosition,0,championColumns); rowPosition++;
             champGames = RecordCruncher.filterChampions(games, champNames.get(k));
@@ -84,6 +86,7 @@ public class SpecificStats extends Stats{
                 
             roleGames = RecordCruncher.filterRole(champGames, "Top");
             matchupNames = RecordCruncher.findAllMatchups(roleGames);
+            java.util.Collections.sort(matchupNames); 
             for(int m=0; m<matchupNames.size(); m++){
                 matchupGames = RecordCruncher.filterMatchups(roleGames,matchupNames.get(m));
                 doMatchupStatsRow(sh,matchupGames,rowPosition, 1, matchupGames.size(), matchupNames.get(m), "Top"); rowPosition++;
@@ -91,6 +94,7 @@ public class SpecificStats extends Stats{
                 
             roleGames = RecordCruncher.filterRole(champGames, "Jungler");
             matchupNames = RecordCruncher.findAllMatchups(roleGames);
+            java.util.Collections.sort(matchupNames);
             for(int m=0; m<matchupNames.size(); m++){
                 matchupGames = RecordCruncher.filterMatchups(roleGames,matchupNames.get(m));
                 doMatchupStatsRow(sh,matchupGames,rowPosition, 1, matchupGames.size(), matchupNames.get(m), "Jungler"); rowPosition++;
@@ -98,6 +102,7 @@ public class SpecificStats extends Stats{
               
             roleGames = RecordCruncher.filterRole(champGames, "Mid");
             matchupNames = RecordCruncher.findAllMatchups(roleGames);
+            java.util.Collections.sort(matchupNames);
             for(int m=0; m<matchupNames.size(); m++){
                 matchupGames = RecordCruncher.filterMatchups(roleGames,matchupNames.get(m));
                 doMatchupStatsRow(sh,matchupGames,rowPosition, 1, matchupGames.size(), matchupNames.get(m), "Mid"); rowPosition++;
@@ -105,6 +110,7 @@ public class SpecificStats extends Stats{
             
             roleGames = RecordCruncher.filterRole(champGames, "ADC");
             matchupNames = RecordCruncher.findAllMatchups(roleGames);
+            java.util.Collections.sort(matchupNames);
             for(int m=0; m<matchupNames.size(); m++){
                 matchupGames = RecordCruncher.filterMatchups(roleGames,matchupNames.get(m));
                 doMatchupStatsRow(sh,matchupGames,rowPosition, 1, matchupGames.size(), matchupNames.get(m), "Adc"); rowPosition++;
@@ -112,15 +118,14 @@ public class SpecificStats extends Stats{
             
             roleGames = RecordCruncher.filterRole(champGames, "Support");
             matchupNames = RecordCruncher.findAllMatchups(roleGames);
+            java.util.Collections.sort(matchupNames);
             for(int m=0; m<matchupNames.size(); m++){
                 matchupGames = RecordCruncher.filterMatchups(roleGames,matchupNames.get(m));
                 doMatchupStatsRow(sh,matchupGames,rowPosition, 1, matchupGames.size(), matchupNames.get(m), "Support"); rowPosition++;
             }
-               
-                
+
             rowPosition+=2;
         }
-            
         return true;
     }
             
