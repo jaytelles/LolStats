@@ -58,18 +58,25 @@ public class GeneralStats extends Stats{
              rowPosition = doStatsRow(sh, champGames, rowPosition, 0, champGames.size(), champNames.get(k));
          }
          rowPosition++;
-         
+
+         ArrayList<Gameinfo> submitterGames = RecordCruncher.filterUsers(Gameinfo.getAllGameinfos(),username);
          ArrayList<Gameinfo> teammateGames;
-         ArrayList<String> teammateNames = RecordCruncher.findAllTeammates(games, username);
+         ArrayList<String> teammateNames = RecordCruncher.findAllTeammates(submitterGames, playerName);
+         
+         
          matchupColumns.clear();
          matchupColumns.add("Player");
          if(teammateNames.size()>0){
             rowPosition = super.writeStatsRowColumnHeader(sh,rowPosition,0,matchupColumns);
             for(int k=0; k<teammateNames.size(); k++){
-                teammateGames = RecordCruncher.filterPlayers(games, teammateNames.get(k));
+                teammateGames = RecordCruncher.filterPlayers(submitterGames, teammateNames.get(k));
                 rowPosition = doStatsRow(sh,teammateGames,rowPosition,0,teammateGames.size(), teammateNames.get(k));
             }
          }
+         
+         /*SELECT gi.PlayerName, gi2.playerName
+from gameinfos gi, gameinfos gi2
+where gi.GameNumber = gi2.GameNumber and gi.SubmitterName='lolshoppip' and gi.playername='sexdragonite' and gi2.playername='lolshoppip';*/
          
          wb.write(fos);   
          fos.close();
