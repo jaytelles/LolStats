@@ -48,6 +48,7 @@ public class GeneralStats extends Stats{
          
          
          ArrayList<String> champNames = RecordCruncher.findAllChampions(games);
+         java.util.Collections.sort(champNames);
          ArrayList<Gameinfo> champGames;
          matchupColumns.clear();
          matchupColumns.add("Champion");

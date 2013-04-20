@@ -103,7 +103,7 @@ public class LolStats {
                 System.out.println("2. Specific Stats For Player");
                 System.out.println("3. General Stats For Player");
                 
-                if(player.getModStatus().equalsIgnoreCase("yes")){
+                if(player.getModStatus().equalsIgnoreCase("yes")||player.getSuperStatus().equalsIgnoreCase("yes")){
                     System.out.println("4. Add a new player");
                 }
                 if(player.getSuperStatus().equalsIgnoreCase("yes")){
@@ -134,7 +134,7 @@ public class LolStats {
                         startSpecificStats(player);
                     } else if(line.equals("3")){
                         startGeneralStats(player);
-                    } else if(line.equals("4") && player.getModStatus().equalsIgnoreCase("yes")){
+                    } else if(line.equals("4") && player.getModStatus().equalsIgnoreCase("yes")||player.getSuperStatus().equalsIgnoreCase("yes")){
                         if(passwordConfirmed||userLogin(player)){
                             createNewPlayer();
                             passwordConfirmed = true;
