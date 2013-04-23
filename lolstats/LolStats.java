@@ -193,6 +193,8 @@ public class LolStats {
         
         public static void dataEntry(String username){ 
             ArrayList<String> roles = new ArrayList<>();
+            ArrayList<String> alliedChampsList = new ArrayList<>();
+            ArrayList<String> enemyChampsList = new ArrayList<>();
             Scanner input = new Scanner(System.in);
             Gamemapinfos mapinfo = new Gamemapinfos();
             Gameinfo gameinfo = new Gameinfo();
@@ -249,9 +251,12 @@ public class LolStats {
                 data = input.nextLine();
                 data = fixInput(data);
                 if(containsChamp(champs,data)){
+                    alliedChampsList.add(data);
                     accepted = true;
                     gameinfo.setChampPlayed(data);
                     data = "";
+                } else {
+                    System.out.println("That champion does not exist");
                 }
             }  
             accepted = false;
@@ -274,6 +279,7 @@ public class LolStats {
                 data = input.nextLine();
                 data = fixInput(data);
                 if(containsChamp(champs,data)){
+                    enemyChampsList.add(data);
                     accepted = true;
                     gameinfo.setLaneOpponent(data);
                     data = "";
@@ -417,7 +423,7 @@ public class LolStats {
                 if(data.equalsIgnoreCase("Yes")){
                     accepted = true;
                     enterTeammates((int)Long.valueOf(String.valueOf(mapinfo.getId())).longValue(), gameinfo.getNumTeammates(), 
-                    teamGotFirstBlood, personallyGotFirstBlood, gameinfo.getGameOutcome(), username, roles);
+                    teamGotFirstBlood, personallyGotFirstBlood, gameinfo.getGameOutcome(), username, roles, alliedChampsList, enemyChampsList);
                     
                 } else if(data.equalsIgnoreCase("No")){
                     accepted = true;
@@ -426,7 +432,8 @@ public class LolStats {
         }
        
         private static void enterTeammates(int gameNumber, int numTeammates, boolean teamGotFirstBlood, boolean personallyGotFirstBlood, 
-                                            String gameOutcome, String username, ArrayList<String> roles){
+                                            String gameOutcome, String username, 
+                                            ArrayList<String> roles, ArrayList<String> alliedChampsList, ArrayList<String> enemyChampsList){
             ArrayList<String> teammates = new ArrayList<>();
             teammates.add(username);
             Scanner input = new Scanner(System.in);
@@ -436,10 +443,12 @@ public class LolStats {
             int intdata;
             boolean accepted = false;
             boolean firstBloodTaken = personallyGotFirstBlood;
+            boolean continueEntry = true;
+           
             
-            System.out.println("Game Number: "+gameNumber);
-            for (int k=0; k<numTeammates; k++){
+            for (int k=0; k<numTeammates&&continueEntry; k++){
                 gameinfo = new Gameinfo();
+                gameinfo.setSubmitterName(username);
                 gameinfo.setNumTeammates(numTeammates);
                 gameinfo.setGameNumber(gameNumber);
                 gameinfo.setGameOutcome(gameOutcome);
@@ -467,9 +476,16 @@ public class LolStats {
                     data = input.nextLine();
                     data = fixInput(data);
                     if(containsChamp(champs,data)){
-                        accepted = true;
-                        gameinfo.setChampPlayed(data);
-                        data = "";
+                        if(!alliedChampsList.contains(data)){
+                            alliedChampsList.add(data);
+                            accepted = true;
+                            gameinfo.setChampPlayed(data);
+                            data = "";
+                        } else {
+                            System.out.println("That champion has already been entered for your team.");
+                        }
+                    } else {
+                        System.out.println("That champion does not exist");
                     }
                 }  
                 accepted = false;
@@ -477,13 +493,15 @@ public class LolStats {
                 while(!accepted){
                     System.out.print("Enter Role: ");
                     data = input.nextLine();
-                    data = fixInput(data);
+                    data = fixInput(data); 
                     if(data.equals("Top")||data.equals("Jungler")||data.equals("Support")||data.equals("Adc")||data.equals("Mid")){
-                        if(contains(roles,data)==false){
+                        if(!roles.contains(data)){
                             accepted = true;
                             gameinfo.setRole(data);
                             roles.add(data);
                             data = "";
+                        } else {
+                            System.out.println("That role has already been assigned");
                         }
                     }
                 }
@@ -494,9 +512,14 @@ public class LolStats {
                     data = input.nextLine();
                     data = fixInput(data);
                     if(containsChamp(champs,data)){
-                        accepted = true;
-                        gameinfo.setLaneOpponent(data);
-                        data = "";
+                        if(!enemyChampsList.contains(data)){
+                            enemyChampsList.add(data);
+                            accepted = true;
+                            gameinfo.setLaneOpponent(data);
+                            data = "";
+                        } else {
+                            System.out.println("That champion has already been entered for the opposing team.");
+                        }
                     }
                 }
                 accepted = false;
@@ -580,15 +603,37 @@ public class LolStats {
                     gameinfo.setGotFirstBlood("No");
                 }
                 
-                System.out.print("Enter Description: ");
-                data = input.nextLine();
-                gameinfo.setSubmitterName(username);
-                gameinfo.setDescription(data);
+                while(!accepted){
+                    System.out.print("Enter Description: ");
+                    data = input.nextLine();
+
+                    if(data.length()<256){
+                        accepted = true;
+                        gameinfo.setDescription(data);
+                    } else {
+                        System.out.println("Description  is longer than 256 characters");
+                    }
+                }
+                accepted = false;
                 
                 boolean confirmed = gameinfo.saveIt();
                 while(!confirmed){
                     confirmed = gameinfo.saveIt();
                 }
+                
+                
+                while(!accepted&&k<numTeammates-1){
+                    System.out.print("Continue Entry?[yes/no]: ");
+                    data = input.nextLine();
+                    
+                    if(data.equalsIgnoreCase("yes")){
+                        accepted = true;
+                    } else if (data.equalsIgnoreCase("no")){
+                        accepted = true;
+                        continueEntry = false;
+                    }
+                }
+                accepted = false;
             }
         }
            
