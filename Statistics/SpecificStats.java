@@ -45,7 +45,9 @@ public class SpecificStats extends Stats{
             matchupColumns.add("Teammates");
             rowPosition++;
             rowPosition = super.writeStatsRowColumnHeader(sh,rowPosition,0,matchupColumns);
-            rowPosition = super.doStatsRow(sh,RecordCruncher.filterNumTeammates(games, 0),rowPosition, 0, games.size(), "0");
+            if(username.equalsIgnoreCase(playerName)){
+                rowPosition = doStatsRow(sh,RecordCruncher.filterNumTeammates(games, 0),rowPosition, 0, games.size(), "0");
+            }
             rowPosition = super.doStatsRow(sh,RecordCruncher.filterNumTeammates(games, 1),rowPosition, 0, games.size(), "1");
             rowPosition = super.doStatsRow(sh,RecordCruncher.filterNumTeammates(games, 2),rowPosition, 0, games.size(), "2");
             rowPosition = super.doStatsRow(sh,RecordCruncher.filterNumTeammates(games, 3),rowPosition, 0, games.size(), "3");
