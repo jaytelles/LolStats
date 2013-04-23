@@ -61,7 +61,6 @@ public class RecordCruncher{
                 filteredList.add(games.get(k));
             }
         }
-        
         return filteredList;
     }
     
@@ -72,7 +71,6 @@ public class RecordCruncher{
                 filteredList.add(games.get(k));
             }
         }
-        
         return filteredList;
     }
     
@@ -93,7 +91,6 @@ public class RecordCruncher{
                filteredList.add(games.get(k));
            }
         }
-        
         return filteredList;
     }
     
