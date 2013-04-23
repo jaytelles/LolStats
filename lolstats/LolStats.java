@@ -166,7 +166,7 @@ public class LolStats {
                         startSpecificStats(player);
                     } else if(line.equals("3")){
                         startGeneralStats(player);
-                    } else if(line.equals("4") && player.getModStatus().equalsIgnoreCase("yes")||player.getSuperStatus().equalsIgnoreCase("yes")){
+                    } else if(line.equals("4") && (player.getModStatus().equalsIgnoreCase("yes")||player.getSuperStatus().equalsIgnoreCase("yes"))){
                         if(passwordConfirmed||userLogin(player)){
                             createNewPlayer();
                             passwordConfirmed = true;
