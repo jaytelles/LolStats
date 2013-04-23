@@ -49,7 +49,9 @@ public class LolStats {
      * 
      * 22. make sure that the same champ cannot be entered twice for the user's team
      * 
-     * 23. 
+     * 23. refactor the roles, champs, and enemy champs list to a single object, then make a list of those objects
+     * 
+     * 24. 
      */
     
     /** BUGS
@@ -59,13 +61,14 @@ public class LolStats {
      * 
      //* 3. enterTeammates description is not checked for length - done
      * 
-     * 4. entered teammate data for a test game, and the playername for all teammates was morello. the username was lolstats dafuq? - DONE. 
+     //* 4. entered teammate data for a test game, and the playername for all teammates was morello. the username was lolstats dafuq? - DONE. 
      *      accepted value not reset, and username was never actually set for the teammate gameinfos.
      * 
     // * 5. the prompt to continue entering teammate data is always displayed, even when the teammate entered is the lat teammate - DONE
     *       forgot to add check for that case
     * 
-    * 6. error when exit is chosen as the first option. program execution asks for a pw then goes to player creation - probably related to permissions
+    //* 6. error when exit is chosen as the first option. program execution asks for a pw then goes to player creation - probably related to permissions - DONE
+    *       added parens to the permissions check in option for adding a new player
      */
 	public static void main(String[] args) throws IOException {
             final String delCMD = "netsh advfirewall firewall delete rule name=\"MYSQL\" protocol=tcp localport=3306";
