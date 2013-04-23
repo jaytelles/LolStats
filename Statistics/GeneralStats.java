@@ -70,16 +70,28 @@ public class GeneralStats extends Stats{
          matchupColumns.add("Player");
          if(teammateNames.size()>0){
             rowPosition = super.writeStatsRowColumnHeader(sh,rowPosition,0,matchupColumns);
-            for(int k=0; k<teammateNames.size(); k++){
-                teammateGames = RecordCruncher.filterPlayers(submitterGames, teammateNames.get(k));
-                rowPosition = doStatsRow(sh,teammateGames,rowPosition,0,teammateGames.size(), teammateNames.get(k));
+            if(playerName.equalsIgnoreCase(username)){
+                for(int k=0; k<teammateNames.size(); k++){
+                    teammateGames = RecordCruncher.filterPlayers(submitterGames, teammateNames.get(k));
+                    rowPosition = doStatsRow(sh,teammateGames,rowPosition,0,teammateGames.size(), teammateNames.get(k));
+                }
+            } else {
+            /*SELECT gi.PlayerName, gi2.playerName
+from gameinfos gi, gameinfos gi2
+where gi.GameNumber = gi2.GameNumber and gi.SubmitterName='lolshoppip' and gi.playername='sexdragonite' and gi2.playername='lolshoppip';*/
+                
+                
+                /*
+                 * 1. Filter the list of games by submittername
+                 * 2. Filter the result of step 1 by playername
+                 * 
+                 * 3. 
+                 */
             }
          }
          
-         /*SELECT gi.PlayerName, gi2.playerName
-from gameinfos gi, gameinfos gi2
-where gi.GameNumber = gi2.GameNumber and gi.SubmitterName='lolshoppip' and gi.playername='sexdragonite' and gi2.playername='lolshoppip';*/
          
+          
          wb.write(fos);   
          fos.close();
          return true;
