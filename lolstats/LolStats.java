@@ -47,11 +47,11 @@ public class LolStats {
      * 
      * 21. rename a player function
      * 
-     * 22. make sure that the same champ cannot be entered twice for the user's team
+     * 22. make sure that the same champ cannot be entered twice for the user's team, as well as no chamap twice on the enemy team - DONE
      * 
      * 23. refactor the roles, champs, and enemy champs list to a single object, then make a list of those objects
      * 
-     * 24. 
+     * 24. stats sections now show alphabetized lists of champions/matchups - DONE
      */
     
     /** BUGS
