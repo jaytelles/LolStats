@@ -52,6 +52,8 @@ public class LolStats {
      * 23. refactor the roles, champs, and enemy champs list to a single object, then make a list of those objects
      * 
      * 24. stats sections now show alphabetized lists of champions/matchups - DONE
+     * 
+     * 25. General stats teammates section - DONE
      */
     
     /** BUGS

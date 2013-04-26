@@ -62,37 +62,28 @@ public class GeneralStats extends Stats{
          }
          rowPosition++;
 
+         //Champions section
          ArrayList<Gameinfo> submitterGames = RecordCruncher.filterUsers(Gameinfo.getAllGameinfos(),username);
-         ArrayList<Gameinfo> teammateGames;
-         ArrayList<String> teammateNames = RecordCruncher.findAllTeammates(submitterGames, playerName);
-         
-         
          matchupColumns.clear();
          matchupColumns.add("Player");
-         if(teammateNames.size()>0){
-            rowPosition = super.writeStatsRowColumnHeader(sh,rowPosition,0,matchupColumns);
-            if(playerName.equalsIgnoreCase(username)){
-                for(int k=0; k<teammateNames.size(); k++){
-                    teammateGames = RecordCruncher.filterPlayers(submitterGames, teammateNames.get(k));
-                    rowPosition = doStatsRow(sh,teammateGames,rowPosition,0,teammateGames.size(), teammateNames.get(k));
-                }
-            } else {
-            /*SELECT gi.PlayerName, gi2.playerName
-from gameinfos gi, gameinfos gi2
-where gi.GameNumber = gi2.GameNumber and gi.SubmitterName='lolshoppip' and gi.playername='sexdragonite' and gi2.playername='lolshoppip';*/
-                
-                
-                /*
-                 * 1. Filter the list of games by submittername
-                 * 2. Filter the result of step 1 by playername
-                 * 
-                 * 3. 
-                 */
-            }
+         ArrayList<Gameinfo> teammateGames = new ArrayList<>();
+         
+         for(int k=0; k<submitterGames.size(); k++){
+             if(!submitterGames.get(k).getPlayerName().equals(playerName)){
+                 teammateGames.add(submitterGames.get(k));
+             }
          }
+         ArrayList<String> teammateNames = RecordCruncher.findAllTeammates(teammateGames);
          
+         if(teammateNames.size()>0){
+             ArrayList<Gameinfo> temp = null;
+             rowPosition = super.writeStatsRowColumnHeader(sh,rowPosition,0,matchupColumns);
+             for(int k=0; k<teammateNames.size(); k++){
+                 temp = RecordCruncher.filterPlayers(teammateGames,teammateNames.get(k));
+                  rowPosition = doStatsRow(sh,temp,rowPosition,0,teammateGames.size(), teammateNames.get(k));
+             }
+         }     
          
-          
          wb.write(fos);   
          fos.close();
          return true;

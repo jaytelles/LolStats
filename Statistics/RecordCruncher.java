@@ -123,12 +123,12 @@ public class RecordCruncher{
             }
         }
         return filteredList;
-    }   
+    }
     
-    public static ArrayList<String> findAllTeammates(ArrayList<Gameinfo> games, String username){
-        ArrayList<String> filteredList = new ArrayList<String>();
+    public static ArrayList<String> findAllTeammates(ArrayList<Gameinfo> games){
+        ArrayList<String> filteredList = new ArrayList<>();
         for(int k=0; k<games.size(); k++){
-            if(!filteredList.contains(games.get(k).getPlayerName())&&!games.get(k).getPlayerName().equals(username)){
+            if(!filteredList.contains(games.get(k).getPlayerName())){
                 filteredList.add(games.get(k).getPlayerName());
             }
         }
