@@ -862,8 +862,6 @@ public class LolStats {
                 System.out.println("\t" + k + ": " + players.get(k).getSummonerName());
                 
             }
-            //new name cant be blank
-            //new name must be lowercase
             while(!accepted){
                 System.out.print("\tEnter the number of the user to change: ");
                 choice = input.nextLine();
