@@ -45,9 +45,9 @@ public class LolStats {
      * 
      * 20. prompt to continue entering teammate stats after each teammate. that way you can have 3 teammates, but only enter stats for 2 - DONE
      * 
-     * 21. rename a player function
+     * 21. rename a player function - DONE
      * 
-     * 22. make sure that the same champ cannot be entered twice for the user's team, as well as no chamap twice on the enemy team - DONE
+     * 22. make sure that the same champ cannot be entered twice for the user's team, as well as no champ twice on the enemy team - DONE
      * 
      * 23. refactor the roles, champs, and enemy champs list to a single object, then make a list of those objects
      * 
@@ -141,6 +141,7 @@ public class LolStats {
                 if(player.getSuperStatus().equalsIgnoreCase("yes")){
                     System.out.println("5. Enter new champ");
                     System.out.println("6. Make a player a mod/super");
+                    System.out.println("7. Change a player's summoner name");
                 }
                 System.out.println("Quit|Exit to terminate this runtime instance");
                  
@@ -181,14 +182,18 @@ public class LolStats {
                             System.out.println("Wrong password.");
                         }
                     } else if(line.equalsIgnoreCase("6") && player.getSuperStatus().equalsIgnoreCase("Yes")){
-                        System.out.println("here");
                         if(passwordConfirmed||userLogin(player)){
                             modifyPermissions();
                             passwordConfirmed = true;
                         } else {
                             System.out.println("Wrong password.");
                         }
-                    } else if(line.equalsIgnoreCase("quit")||line.equalsIgnoreCase("exit")){
+                    } else if(line.equalsIgnoreCase("7")&&player.getSuperStatus().equalsIgnoreCase("Yes")){
+                        if(passwordConfirmed||userLogin(player)){
+                            changeSummonerName();
+                            passwordConfirmed = true;
+                        }
+                    }else if(line.equalsIgnoreCase("quit")||line.equalsIgnoreCase("exit")){
                         accepted = true;
                     }
                 }
@@ -795,7 +800,7 @@ public class LolStats {
                 }
             }
             player = players.get(Integer.valueOf(choice));
-            System.out.println(player.getSummonerName());
+            //System.out.println(player.getSummonerName());
             accepted = false;
             
             while(!accepted){
@@ -841,6 +846,83 @@ public class LolStats {
                     confirm = player.saveIt();
                 }
             }  
+        }
+        
+        private static void changeSummonerName(){
+            Players player = new Players();
+            Scanner input = new Scanner(System.in);
+            String choice = "";
+            String oldname;
+            String newname1 = "";
+            String newname2 = "";
+            boolean accepted = false;
+            boolean confirmed = false;
+            
+            for(int k=0; k<players.size(); k++){
+                System.out.println("\t" + k + ": " + players.get(k).getSummonerName());
+                
+            }
+            //new name cant be blank
+            //new name must be lowercase
+            while(!accepted){
+                System.out.print("\tEnter the number of the user to change: ");
+                choice = input.nextLine();
+                
+                if(isNumerical(choice) && (Integer.valueOf(choice)<players.size() && Integer.valueOf(choice)>=0)){//using lazy evaluation to make sure that input is numerical before check the int value. like a baws.
+                    accepted = true;
+                } else {
+                    System.out.println("Enter valid input");
+                    
+                }
+            }
+            
+            player = players.get(Integer.valueOf(choice));
+            oldname = player.getSummonerName();
+             
+            accepted = false;
+            while(!accepted){
+               System.out.print("Enter New Summoner Name: ");
+               newname1 = input.nextLine();
+               System.out.print("Confirm New Summoner Name: ");
+               newname2 = input.nextLine();
+               
+               if(newname1.equals(newname2)&&!(newname1.equals("")||newname2.equals(" "))){
+                   if(!containsName(players, newname1)){
+                       newname1 = newname1.toLowerCase();
+                       player.setSummonerName(newname1);
+                       
+                       do{
+                           confirmed = player.saveIt();
+                       } while(!confirmed);
+                   } else {
+                       System.out.println("Summoner name already exists");
+                   }
+                   accepted = true;
+               }
+            }
+             
+            LazyList<Gameinfo> games = Gameinfo.getAllGameinfos();
+            boolean changed = false;
+            for(int k=0; k<games.size(); k++){
+                confirmed = false;
+                if(games.get(k).getSubmitterName().equalsIgnoreCase(oldname)){
+                    games.get(k).setSubmitterName(player.getSummonerName());
+                    changed = true;
+                }
+                
+                if(games.get(k).getPlayerName().equalsIgnoreCase(oldname)){
+                    games.get(k).setPlayerName(player.getSummonerName());
+                    changed = true;
+                }
+                
+                if(changed){
+                    System.out.println("In change block");
+                    do{
+                        confirmed = games.get(k).saveIt();
+                    } while(!confirmed);
+                    changed = false;
+                }
+            }
         }
         
         private static void changePassword(Players player){
