@@ -95,14 +95,15 @@ public class LolStats {
                 }
                 openingMenu(player);
 
-                Scanner input = new Scanner(System.in);
-                System.out.print("Press Enter to finish");
-                input.nextLine();
+                
                 Base.close();
             } catch (InitException e){
                 System.out.println("Error 37. The System is down. The System is down. The System is down. Once you get this reference, text Jay and tell him to turn the internet on.");
+                System.out.println("Or, alternatively, make sure that you have an active internet connection.");
             }
-            
+            Scanner input = new Scanner(System.in);
+            System.out.print("Press Enter to finish");
+            input.nextLine();
 	}
         
         public static Players userLogin(){
