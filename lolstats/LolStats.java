@@ -52,14 +52,12 @@ public class LolStats {
      * 23. refactor the roles, champs, and enemy champs list to a single object, then make a list of those objects
      * 
      * 24. stats sections now show alphabetized lists of champions/matchups - DONE
-     * 
-     * 25. General stats teammates section - DONE
      */
     
     /** BUGS
      //* 1. Fixed a bug where exit was not an option after doing general stats - done
      * 
-     * 2. General stats "people played with" for a player that is not the user
+     * 2. General stats "people played with" for a player that is not the user - done
      * 
      //* 3. enterTeammates description is not checked for length - done
      * 
