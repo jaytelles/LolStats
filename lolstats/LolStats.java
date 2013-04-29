@@ -69,6 +69,8 @@ public class LolStats {
     * 
     //* 6. error when exit is chosen as the first option. program execution asks for a pw then goes to player creation - probably related to permissions - DONE
     *       added parens to the permissions check in option for adding a new player
+    * 
+    //* 7. fixed error where user not notified that hte program would not work without an active internet connection.-
      */
 	public static void main(String[] args) throws IOException {
             final String delCMD = "netsh advfirewall firewall delete rule name=\"MYSQL\" protocol=tcp localport=3306";
