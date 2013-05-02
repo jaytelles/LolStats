@@ -180,6 +180,7 @@ public class LolStats {
                         } else {
                             System.out.println("Wrong password.");
                         }
+                        players = Players.getAllPlayers();
                     } else if (line.equals("5") &&  player.getSuperStatus().equalsIgnoreCase("yes")){
                         if(passwordConfirmed||userLogin(player)){
                             createNewChamp();
@@ -187,6 +188,7 @@ public class LolStats {
                         } else {
                             System.out.println("Wrong password.");
                         }
+                        champs = Champs.getAllChamps();
                     } else if(line.equalsIgnoreCase("6") && player.getSuperStatus().equalsIgnoreCase("Yes")){
                         if(passwordConfirmed||userLogin(player)){
                             modifyPermissions();
@@ -194,11 +196,13 @@ public class LolStats {
                         } else {
                             System.out.println("Wrong password.");
                         }
+                        players = Players.getAllPlayers();
                     } else if(line.equalsIgnoreCase("7")&&player.getSuperStatus().equalsIgnoreCase("Yes")){
                         if(passwordConfirmed||userLogin(player)){
                             changeSummonerName();
                             passwordConfirmed = true;
                         }
+                        players = Players.getAllPlayers();
                     }else if(line.equalsIgnoreCase("quit")||line.equalsIgnoreCase("exit")){
                         accepted = true;
                     }
