@@ -58,6 +58,14 @@ public class LolStats {
      * 25. instead of typing out names for stats, have the user select from a list of all players they've played with
      * 
      * 26. add the "help" option so that users can see the options again
+     * 
+     * 27. when changing a username, and the entered username already exists, make sure to return the user to the change prompt, rather than the main menu. 
+     *      Return the user to the main menu after three failed attempts!
+     * 
+     * 28. When entering a new player, the user has three tries to get each field correct before returning them to the main menu
+     * 
+     * 29. When entering a new champ, the user has three tries to get each field correct before returning them to the main menu
+     * 
      */
     
     /** BUGS
@@ -76,13 +84,13 @@ public class LolStats {
     //* 6. error when exit is chosen as the first option. program execution asks for a pw then goes to player creation - probably related to permissions - DONE
     *       added parens to the permissions check in option for adding a new player
     * 
-    //* 7. fixed error where user not notified that hte program would not work without an active internet connection.-
+    //* 7. fixed error where user not notified that hte program would not work without an active internet connection.
     * 
-    * 8. Adding a user does not input the user as all lowercase
-    *   Additionally, this might affect the change username function. Check and see.
+    //* 8. Adding a user does not input the user as all lowercase - Resolved. Added a toLowerCase to the string passed to the DB
+    *   Additionally, this might affect the change username function. Check and see. - It does not.
     * 
-    * 9. I added a user, then could not add that person to the game i was entering stats for. 
-    *   Close/Reopen connection to repopulate relations?
+    //* 9. I added a user, then could not add that person to the game i was entering stats for. 
+    *   Close/Reopen connection to repopulate relations? - No, just update the list of players after each change.
      */
 	public static void main(String[] args) throws IOException {
             final String delCMD = "netsh advfirewall firewall delete rule name=\"MYSQL\" protocol=tcp localport=3306";
