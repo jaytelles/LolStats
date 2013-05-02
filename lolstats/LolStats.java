@@ -749,7 +749,7 @@ public class LolStats {
                 
                 if(username1.equals(username2)){
                     if(!containsName(players, username1)){                    
-                        player.setSummonerName(username1);
+                        player.setSummonerName(username1.toLowerCase());
                         boolean confirmed = player.saveIt();
                         while(!confirmed){
                             confirmed = player.saveIt();
