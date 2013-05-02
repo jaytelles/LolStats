@@ -141,26 +141,29 @@ public class LolStats {
             return players.get(k-1);
         }
         
+        public static void displayOptions(Players player){
+            System.out.println("0. Change password");
+            System.out.println("1. Enter Stats for a game");
+            System.out.println("2. Specific Stats For Player");
+            System.out.println("3. General Stats For Player");
+                
+            if(player.getModStatus().equalsIgnoreCase("yes")||player.getSuperStatus().equalsIgnoreCase("yes")){
+                System.out.println("4. Add a new player");
+            }
+            if(player.getSuperStatus().equalsIgnoreCase("yes")){
+                System.out.println("5. Enter new champ");
+                System.out.println("6. Make a player a mod/super");
+                System.out.println("7. Change a player's summoner name");
+            }
+            System.out.println("Quit|Exit to terminate this runtime instance");
+        }
+        
         public static void openingMenu(Players player){
                 Scanner input = new Scanner(System.in);
                 String line;
                 boolean accepted = false;
                 boolean passwordConfirmed = false;
-                
-                System.out.println("0. Change password");
-                System.out.println("1. Enter Stats for a game");
-                System.out.println("2. Specific Stats For Player");
-                System.out.println("3. General Stats For Player");
-                
-                if(player.getModStatus().equalsIgnoreCase("yes")||player.getSuperStatus().equalsIgnoreCase("yes")){
-                    System.out.println("4. Add a new player");
-                }
-                if(player.getSuperStatus().equalsIgnoreCase("yes")){
-                    System.out.println("5. Enter new champ");
-                    System.out.println("6. Make a player a mod/super");
-                    System.out.println("7. Change a player's summoner name");
-                }
-                System.out.println("Quit|Exit to terminate this runtime instance");
+                displayOptions(player);
                  
                 while(!accepted){
                     System.out.print("\tEnter your choice: ");
@@ -214,6 +217,8 @@ public class LolStats {
                             passwordConfirmed = true;
                         }
                         players = Players.getAllPlayers();
+                    } else if(line.equalsIgnoreCase("help")){
+                        displayOptions(player);
                     }else if(line.equalsIgnoreCase("quit")||line.equalsIgnoreCase("exit")){
                         accepted = true;
                     }
