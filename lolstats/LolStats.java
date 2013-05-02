@@ -51,7 +51,13 @@ public class LolStats {
      * 
      * 23. refactor the roles, champs, and enemy champs list to a single object, then make a list of those objects
      * 
-     * 24. stats sections now show alphabetized lists of champions/matchups - DONE
+     * 24. stats sections now show alphabetized lists of champions/matchups - DONE.
+     * 
+     * 
+     * V 0.6.0
+     * 25. instead of typing out names for stats, have the user select from a list of all players they've played with
+     * 
+     * 26. add the "help" option so that users can see the options again
      */
     
     /** BUGS
@@ -71,6 +77,12 @@ public class LolStats {
     *       added parens to the permissions check in option for adding a new player
     * 
     //* 7. fixed error where user not notified that hte program would not work without an active internet connection.-
+    * 
+    * 8. Adding a user does not input the user as all lowercase
+    *   Additionally, this might affect the change username function. Check and see.
+    * 
+    * 9. I added a user, then could not add that person to the game i was entering stats for. 
+    *   Close/Reopen connection to repopulate relations?
      */
 	public static void main(String[] args) throws IOException {
             final String delCMD = "netsh advfirewall firewall delete rule name=\"MYSQL\" protocol=tcp localport=3306";
@@ -84,15 +96,6 @@ public class LolStats {
                 champs = Champs.getAllChamps();
                 Players player = userLogin();
                 if(player.getSummonerName().equalsIgnoreCase("blindzubat")){
-                    System.out.println("LOOKS LIKE OP DELIVERED");
-                    System.out.println("LOOKS LIKE OP DELIVERED");
-                    System.out.println("LOOKS LIKE OP DELIVERED");
-                    System.out.println("LOOKS LIKE OP DELIVERED");
-                    System.out.println("LOOKS LIKE OP DELIVERED");
-                    System.out.println("LOOKS LIKE OP DELIVERED");
-                    System.out.println("LOOKS LIKE OP DELIVERED");
-                    System.out.println("LOOKS LIKE OP DELIVERED");
-                    System.out.println("LOOKS LIKE OP DELIVERED");
                     System.out.println("LOOKS LIKE OP DELIVERED");
                 }
                 openingMenu(player);
