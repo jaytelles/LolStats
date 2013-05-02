@@ -23,6 +23,9 @@ import org.javalite.activejdbc.InitException;
                  * 5. if the person's role is support, then add a field in gameinfos that contains the person that was the adc, and prompt for entry
                  * 6. total - wins to compute stats?
                  * 7. centering cells
+                 * 
+                 * 
+                 * 
                  */
 
 public class LolStats {
