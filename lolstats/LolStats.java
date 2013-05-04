@@ -753,8 +753,9 @@ public class LolStats {
             boolean accepted = false;
             Scanner input = new Scanner(System.in);
             Players player = new Players();
+            int tries = 0;
             
-            while(!accepted){
+            while(!accepted&&tries<3){
                 System.out.print("Enter First Name: ");
                 String firstName1 = input.nextLine();
                 System.out.print("Confirm First Name: ");
@@ -763,11 +764,14 @@ public class LolStats {
                 if(firstName1.equals(firstName2)){
                     player.setFirstName(firstName1);
                     accepted = true;
+                    tries = 0;
+                } else {
+                    tries++;
                 }
             }
             accepted = false;
             
-            while(!accepted){
+            while(!accepted&&tries<3){
                 System.out.print("Enter Last Name: ");
                 String lastName1 = input.nextLine();
                 System.out.print("Confirm Last Name: ");
@@ -776,11 +780,14 @@ public class LolStats {
                 if(lastName1.equals(lastName2)){
                     player.setLastName(lastName1);
                     accepted = true;
+                    tries = 0;
+                } else {
+                    tries++;
                 }
             }
             accepted = false;
             
-            while(!accepted){
+            while(!accepted&&tries<3){
                 System.out.print("Enter Summoner Name: ");
                 String username1 = input.nextLine();
                 System.out.print("Confirm Summoner Name: ");
@@ -791,13 +798,21 @@ public class LolStats {
                         player.setSummonerName(username1.toLowerCase());
                         boolean confirmed = player.saveIt();
                         while(!confirmed){
+                            accepted = true;
+                            tries = 0;
                             confirmed = player.saveIt();
                         }
                     } else {
                         System.out.println("Summoner name already exists");
+                        tries++;
                     }
-                    accepted = true;
+                } else {
+                    tries++;
                 }
+            }
+            
+            if(tries==3){
+                System.out.println("You tried unsuccessfully to enter info 3 times. Returning you to the main menu");
             }
         }
         
