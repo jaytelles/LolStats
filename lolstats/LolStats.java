@@ -954,14 +954,13 @@ public class LolStats {
                    if(!containsName(players, newname1)){
                        newname1 = newname1.toLowerCase();
                        player.setSummonerName(newname1);
-                       
+                       accepted = true;
                        do{
                            confirmed = player.saveIt();
                        } while(!confirmed);
                    } else {
                        System.out.println("Summoner name already exists");
-                   }
-                   accepted = true;
+                   } 
                }
             }
              
@@ -980,7 +979,6 @@ public class LolStats {
                 }
                 
                 if(changed){
-                    System.out.println("In change block");
                     do{
                         confirmed = games.get(k).saveIt();
                     } while(!confirmed);
