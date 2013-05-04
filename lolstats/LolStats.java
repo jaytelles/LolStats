@@ -1023,7 +1023,7 @@ public class LolStats {
                     do{
                         confirmed = player.saveIt();
                     }while(!confirmed);
-                    System.out.println("Password successfull changed");
+                    System.out.println("Password successfully changed");
                 } else {
                     System.out.println("Inputs do not match; Try again.");
                     tries++;
