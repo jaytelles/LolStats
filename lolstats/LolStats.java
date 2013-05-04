@@ -60,7 +60,7 @@ public class LolStats {
      * V 0.6.0
      * 25. instead of typing out names for stats, have the user select from a list of all players they've played with
      * 
-     * 26. add the "help" option so that users can see the options again
+     * 26. add the "help" option so that users can see the options again - DONE
      * 
      * 27. when changing a username, and the entered username already exists, make sure to return the user to the change prompt, rather than the main menu. 
      *      Return the user to the main menu after three failed attempts!
@@ -672,11 +672,50 @@ public class LolStats {
         }
            
         private static void startSpecificStats(Players player){
+            Players statsPlayer = new Players();
             Scanner input = new Scanner(System.in);
-            String playerName;
+            String choice = "";
+            String oldname;
+            String newname1 = "";
+            String newname2 = "";
+            boolean accepted = false;
+            boolean confirmed = false;
+            
+            for(int k=0; k<players.size(); k++){
+                System.out.println("\t" + k + ": " + players.get(k).getSummonerName());
+                
+            }
+            while(!accepted){
+                System.out.print("\tEnter the number of the user to change: ");
+                choice = input.nextLine();
+                
+                if(isNumerical(choice) && (Integer.valueOf(choice)<players.size() && Integer.valueOf(choice)>=0)){//using lazy evaluation to make sure that input is numerical before check the int value. like a baws.
+                    accepted = true;
+                } else {
+                    System.out.println("Enter valid input");
+                    
+                }
+            }
+            
+            statsPlayer = players.get(Integer.valueOf(choice));
+            //the player you're doing stats for, the current user
+            SpecificStats statsPage = new SpecificStats(statsPlayer.getSummonerName(), player.getSummonerName());
+            try{
+                statsPage.doStatsForOnePlayer();
+            } catch (IOException e){
+                    System.out.println("The stats file may be currently open. Make sure that it is closed");
+                    System.out.print("Press Enter to continue");
+                    input.nextLine();
+                    startSpecificStats(statsPlayer);
+            }
+            
+            
+            
+            
+            /*String playerName;
             boolean innerAccepted = false;
             while(!innerAccepted){
-                System.out.print("Enter PlayerName for detailed stats view: ");
+                //System.out.print("Enter PlayerName for detailed stats view: ");
                 playerName = input.nextLine();
                 if(containsName(players, playerName)){
                     SpecificStats statsPage = new SpecificStats(playerName, player.getSummonerName());
@@ -691,6 +730,7 @@ public class LolStats {
                     innerAccepted = true;
                 }
             }
+            */
         }
         
         private static void startGeneralStats(Players player){
