@@ -944,7 +944,8 @@ public class LolStats {
             oldname = player.getSummonerName();
              
             accepted = false;
-            while(!accepted){
+            int tries = 0;
+            while(!accepted&&tries<3){
                System.out.print("Enter New Summoner Name: ");
                newname1 = input.nextLine();
                System.out.print("Confirm New Summoner Name: ");
@@ -960,30 +961,35 @@ public class LolStats {
                        } while(!confirmed);
                    } else {
                        System.out.println("Summoner name already exists");
+                       tries++;
                    } 
                }
             }
              
-            LazyList<Gameinfo> games = Gameinfo.getAllGameinfos();
-            boolean changed = false;
-            for(int k=0; k<games.size(); k++){
-                confirmed = false;
-                if(games.get(k).getSubmitterName().equalsIgnoreCase(oldname)){
-                    games.get(k).setSubmitterName(player.getSummonerName());
-                    changed = true;
+            if(tries<3){
+                LazyList<Gameinfo> games = Gameinfo.getAllGameinfos();
+                boolean changed = false;
+                for(int k=0; k<games.size(); k++){
+                    confirmed = false;
+                    if(games.get(k).getSubmitterName().equalsIgnoreCase(oldname)){
+                        games.get(k).setSubmitterName(player.getSummonerName());
+                        changed = true;
+                    }
+
+                    if(games.get(k).getPlayerName().equalsIgnoreCase(oldname)){
+                        games.get(k).setPlayerName(player.getSummonerName());
+                        changed = true;
+                    }
+
+                    if(changed){
+                        do{
+                            confirmed = games.get(k).saveIt();
+                        } while(!confirmed);
+                        changed = false;
+                    }
                 }
-                
-                if(games.get(k).getPlayerName().equalsIgnoreCase(oldname)){
-                    games.get(k).setPlayerName(player.getSummonerName());
-                    changed = true;
-                }
-                
-                if(changed){
-                    do{
-                        confirmed = games.get(k).saveIt();
-                    } while(!confirmed);
-                    changed = false;
-                }
+            } else {
+                System.out.println("Invalid inputs. Returning you to the main menu");
             }
         }
         
