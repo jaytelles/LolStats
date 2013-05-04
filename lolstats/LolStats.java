@@ -811,15 +811,15 @@ public class LolStats {
         }
         
         private static void createNewChamp(){
-            boolean innerAccepted = false;
+            boolean accepted = false;
             Scanner input = new Scanner(System.in);
-            while(!innerAccepted){
+            int tries = 0;
+            while(!accepted&&tries<3){
                 System.out.print("Enter new champ: ");
                 String newname1 = input.nextLine();
                 System.out.print("Confirm new champ: ");
                 String newname2 = input.nextLine();
                 if(newname1.equals(newname2)){
-                    innerAccepted = true;
                     Champs champ = new Champs();
                     champ.setName(newname1);
                                 
@@ -831,16 +831,22 @@ public class LolStats {
                     }
                                
                     if(!contained){
+                        accepted = true;
                         boolean confirmed = champ.saveIt();
                         while(!confirmed){
                             confirmed = champ.saveIt();
                         }
                     } else {
                         System.out.println("Champion already contained in table");
+                        tries++;
                     }
                 } else {
                     System.out.println("Names didn't match. Try again.");
+                    tries++;
                 }
+            }
+            if(tries>=3){
+                System.out.println("Invalid inputs. Returning you to the main menu");
             }
         }
         
