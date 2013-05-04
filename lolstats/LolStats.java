@@ -704,53 +704,40 @@ public class LolStats {
                     input.nextLine();
                     startSpecificStats(statsPlayer);
             }
-            
-            
-            
-            
-            /*String playerName;
-            boolean innerAccepted = false;
-            while(!innerAccepted){
-                //System.out.print("Enter PlayerName for detailed stats view: ");
-                playerName = input.nextLine();
-                if(containsName(players, playerName)){
-                    SpecificStats statsPage = new SpecificStats(playerName, player.getSummonerName());
-                    try{
-                        statsPage.doStatsForOnePlayer();
-                    } catch (IOException e){
-                        System.out.println("The stats file may be currently open. Make sure that it is closed");
-                        System.out.print("Press Enter to continue");
-                        input.nextLine();
-                        startSpecificStats(player);
-                    }
-                    innerAccepted = true;
-                }
-            }
-            */
         }
         
         private static void startGeneralStats(Players player){
-            boolean innerAccepted = false;
-            String playerName;
+            Players statsPlayer = new Players();
             Scanner input = new Scanner(System.in);
-            while(!innerAccepted){
+            String choice = "";
+            boolean accepted = false;
+            
+            for(int k=0; k<players.size(); k++){
+                System.out.println("\t" + k + ": " + players.get(k).getSummonerName());
                 
-                System.out.print("Enter PlayerName for general stats view: ");
-                playerName = input.nextLine();
-                if(containsName(players, playerName)){
+            }
+            while(!accepted){
+                System.out.print("\tEnter the number of the user to do stats for: ");
+                choice = input.nextLine();
+                
+                if(isNumerical(choice) && (Integer.valueOf(choice)<players.size() && Integer.valueOf(choice)>=0)){//using lazy evaluation to make sure that input is numerical before check the int value. like a baws.
+                    accepted = true;
+                } else {
+                    System.out.println("Enter valid input");
                     
-                    GeneralStats genStatsPage = new GeneralStats(playerName, player.getSummonerName());
-                    try{
-                        genStatsPage.doGeneralStats();
-                    } catch (IOException e){
-                        
-                        System.out.println("The stats file may be currently open. Make sure that it is closed");
-                        System.out.print("Press Enter to continue");
-                        input.nextLine();
-                        startGeneralStats(player);
-                    }
-                    innerAccepted = true;
-                }  
+                }
+            }
+            
+            statsPlayer = players.get(Integer.valueOf(choice));
+            //the player you're doing stats for, then the current user
+            GeneralStats statsPage = new GeneralStats(statsPlayer.getSummonerName(), player.getSummonerName());
+            try{
+                statsPage.doGeneralStats();
+            } catch (IOException e){
+                    System.out.println("The stats file may be currently open. Make sure that it is closed");
+                    System.out.print("Press Enter to continue");
+                    input.nextLine();
+                    startSpecificStats(statsPlayer);
             }
         }
         
