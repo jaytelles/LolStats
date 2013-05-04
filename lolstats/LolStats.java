@@ -1009,7 +1009,8 @@ public class LolStats {
             Scanner input = new Scanner(System.in);
             String pw1 = "";
             String pw2;
-            while(!accepted){
+            int tries = 0;
+            while(!accepted&&tries<3){
                 System.out.print("Enter new password: ");
                 pw1 = input.nextLine();
                 System.out.print("Confirm password: ");
@@ -1017,13 +1018,19 @@ public class LolStats {
                 
                 if(pw1.equals(pw2)){
                     accepted = true;
+                    player.setPassword(pw1);
+                    boolean confirmed = false;
+                    do{
+                        confirmed = player.saveIt();
+                    }while(!confirmed);
+                    System.out.println("Password successfull changed");
+                } else {
+                    System.out.println("Inputs do not match; Try again.");
+                    tries++;
                 }
             }
-            
-            player.setPassword(pw1);
-            boolean confirmed = player.saveIt();
-            while(!confirmed){
-                confirmed = player.saveIt();
+            if(tries==3){
+                System.out.println("Invalid inputs. Returning you to the main menu");
             }
         }
         
