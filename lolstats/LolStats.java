@@ -6,6 +6,7 @@ import DatabaseInterfaces.Champs;
 import DatabaseInterfaces.Players;
 import DatabaseInterfaces.Gameinfo;
 import DatabaseInterfaces.Gamemapinfos;
+import Statistics.RecordCruncher;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.io.IOException;
@@ -682,35 +683,64 @@ public class LolStats {
         private static void startSpecificStats(Players player){
             Players statsPlayer = new Players();
             Scanner input = new Scanner(System.in);
-            String choice = "";
+            String choice;
             boolean accepted = false;
+            int tries = 0;
             
-            for(int k=0; k<players.size(); k++){
-                System.out.println("\t" + k + ": " + players.get(k).getSummonerName());
+            ArrayList<String> teammates = RecordCruncher.findAllTeammates(RecordCruncher.filterUsers(Gameinfo.getAllGameinfos(), player.getSummonerName()));
+            for(int k=0; k<teammates.size(); k++){
+                System.out.println("\t" + k + ": " + teammates.get(k));
                 
             }
-            while(!accepted){
-                System.out.print("\tEnter the number of the user to do stats for: ");
+            
+            while(!accepted&&tries<3){
+                System.out.print("Enter the username of the user to do stats for[Press Enter for your own stats]: ");
                 choice = input.nextLine();
+                if(choice.equals("")){
+                    choice = player.getSummonerName();
+                    for(int k=0; k<players.size()&&!accepted; k++){
+                        if(players.get(k).getSummonerName().equalsIgnoreCase(choice) && teammates.contains(choice.toLowerCase())){
+                            statsPlayer = players.get(k);
+                            accepted = true;
+                        } 
+                    }
+                } else if(!isNumerical(choice)){
+                    for(int k=0; k<players.size()&&!accepted; k++){
+                        if(players.get(k).getSummonerName().equalsIgnoreCase(choice) && teammates.contains(choice.toLowerCase())){
+                            statsPlayer = players.get(k);
+                            accepted = true;
+                        } 
+                    }
+                } else if(isNumerical(choice) && Integer.valueOf(choice)>=0 && Integer.valueOf(choice)<teammates.size()){
+                    String nameHolder = teammates.get(Integer.valueOf(choice));
+                    for(int k=0; k<players.size()&&!accepted; k++){
+                        if(players.get(k).getSummonerName().equalsIgnoreCase(nameHolder) && teammates.contains(nameHolder)){
+                            statsPlayer = players.get(k);
+                            accepted = true;
+                        }
+                    }
+                }
                 
-                if(isNumerical(choice) && (Integer.valueOf(choice)<players.size() && Integer.valueOf(choice)>=0)){//using lazy evaluation to make sure that input is numerical before check the int value. like a baws.
-                    accepted = true;
-                } else {
-                    System.out.println("Enter valid input");
-                    
+                if(!accepted){
+                    System.out.println("User not recognized. Try again.");
+                    tries++;
                 }
             }
             
-            statsPlayer = players.get(Integer.valueOf(choice));
-            //the player you're doing stats for, then the current user
-            SpecificStats statsPage = new SpecificStats(statsPlayer.getSummonerName(), player.getSummonerName());
-            try{
-                statsPage.doStatsForOnePlayer();
-            } catch (IOException e){
-                    System.out.println("The stats file may be currently open. Make sure that it is closed");
-                    System.out.print("Press Enter to continue");
-                    input.nextLine();
-                    startSpecificStats(statsPlayer);
+            
+            if (tries<3){
+                //the player you're doing stats for, then the current user
+                SpecificStats statsPage = new SpecificStats(statsPlayer.getSummonerName(), player.getSummonerName());
+                try{
+                    statsPage.doStatsForOnePlayer();
+                } catch (IOException e){
+                        System.out.println("The stats file may be currently open. Make sure that it is closed");
+                        System.out.print("Press Enter to continue");
+                        input.nextLine();
+                        startSpecificStats(statsPlayer);
+                }
+            } else {
+                System.out.println("IInvalid inputs. Returning you to the main menu");
             }
         }
         
@@ -719,33 +749,61 @@ public class LolStats {
             Scanner input = new Scanner(System.in);
             String choice = "";
             boolean accepted = false;
+            int tries = 0;
             
-            for(int k=0; k<players.size(); k++){
-                System.out.println("\t" + k + ": " + players.get(k).getSummonerName());
+            ArrayList<String> teammates = RecordCruncher.findAllTeammates(RecordCruncher.filterUsers(Gameinfo.getAllGameinfos(), player.getSummonerName()));
+            for(int k=0; k<teammates.size(); k++){
+                System.out.println("\t" + k + ": " + teammates.get(k));
                 
             }
-            while(!accepted){
-                System.out.print("\tEnter the number of the user to do stats for: ");
+            
+            while(!accepted&&tries<3){
+                System.out.print("Enter the username of the user to do stats for[Press Enter for your own stats]: ");
                 choice = input.nextLine();
+                if(choice.equals("")){
+                    choice = player.getSummonerName();
+                    for(int k=0; k<players.size()&&!accepted; k++){
+                        if(players.get(k).getSummonerName().equalsIgnoreCase(choice) && teammates.contains(choice.toLowerCase())){
+                            statsPlayer = players.get(k);
+                            accepted = true;
+                        } 
+                    }
+                } else if(!isNumerical(choice)){
+                    for(int k=0; k<players.size()&&!accepted; k++){
+                        if(players.get(k).getSummonerName().equalsIgnoreCase(choice) && teammates.contains(choice.toLowerCase())){
+                            statsPlayer = players.get(k);
+                            accepted = true;
+                        } 
+                    }
+                } else if(isNumerical(choice) && Integer.valueOf(choice)>=0 && Integer.valueOf(choice)<teammates.size()){
+                    String nameHolder = teammates.get(Integer.valueOf(choice));
+                    for(int k=0; k<players.size()&&!accepted; k++){
+                        if(players.get(k).getSummonerName().equalsIgnoreCase(nameHolder) && teammates.contains(nameHolder)){
+                            statsPlayer = players.get(k);
+                            accepted = true;
+                        }
+                    }
+                }
                 
-                if(isNumerical(choice) && (Integer.valueOf(choice)<players.size() && Integer.valueOf(choice)>=0)){//using lazy evaluation to make sure that input is numerical before check the int value. like a baws.
-                    accepted = true;
-                } else {
-                    System.out.println("Enter valid input");
-                    
+                if(!accepted){
+                    System.out.println("User not recognized. Try again.");
+                    tries++;
                 }
             }
             
-            statsPlayer = players.get(Integer.valueOf(choice));
             //the player you're doing stats for, then the current user
-            GeneralStats statsPage = new GeneralStats(statsPlayer.getSummonerName(), player.getSummonerName());
-            try{
-                statsPage.doGeneralStats();
-            } catch (IOException e){
-                    System.out.println("The stats file may be currently open. Make sure that it is closed");
-                    System.out.print("Press Enter to continue");
-                    input.nextLine();
-                    startSpecificStats(statsPlayer);
+            if(tries<3){
+                GeneralStats statsPage = new GeneralStats(statsPlayer.getSummonerName(), player.getSummonerName());
+                try{
+                    statsPage.doGeneralStats();
+                } catch (IOException e){
+                        System.out.println("The stats file may be currently open. Make sure that it is closed");
+                        System.out.print("Press Enter to continue");
+                        input.nextLine();
+                        startSpecificStats(statsPlayer);
+                }
+            } else {
+                System.out.println("Invalid inputs. Returning you to the main menu");
             }
         }
         
@@ -814,7 +872,7 @@ public class LolStats {
             if(tries==3){
                 System.out.println("You tried unsuccessfully to enter info 3 times. Returning you to the main menu");
             }
-        }
+        }3
         
         private static void createNewChamp(){
             boolean accepted = false;
