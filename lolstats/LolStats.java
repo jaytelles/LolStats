@@ -675,18 +675,14 @@ public class LolStats {
             Players statsPlayer = new Players();
             Scanner input = new Scanner(System.in);
             String choice = "";
-            String oldname;
-            String newname1 = "";
-            String newname2 = "";
             boolean accepted = false;
-            boolean confirmed = false;
             
             for(int k=0; k<players.size(); k++){
                 System.out.println("\t" + k + ": " + players.get(k).getSummonerName());
                 
             }
             while(!accepted){
-                System.out.print("\tEnter the number of the user to change: ");
+                System.out.print("\tEnter the number of the user to do stats for: ");
                 choice = input.nextLine();
                 
                 if(isNumerical(choice) && (Integer.valueOf(choice)<players.size() && Integer.valueOf(choice)>=0)){//using lazy evaluation to make sure that input is numerical before check the int value. like a baws.
@@ -698,7 +694,7 @@ public class LolStats {
             }
             
             statsPlayer = players.get(Integer.valueOf(choice));
-            //the player you're doing stats for, the current user
+            //the player you're doing stats for, then the current user
             SpecificStats statsPage = new SpecificStats(statsPlayer.getSummonerName(), player.getSummonerName());
             try{
                 statsPage.doStatsForOnePlayer();
@@ -821,8 +817,7 @@ public class LolStats {
                 String newname2 = input.nextLine();
                 if(newname1.equals(newname2)){
                     Champs champ = new Champs();
-                    champ.setName(newname1);
-                                
+                    champ.setName(newname1);      
                     boolean contained = false;
                     for(int k=0; k<champs.size()&&!contained; k++){
                         if(champs.get(k).getName().equalsIgnoreCase(champ.getName())){
