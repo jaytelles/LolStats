@@ -43,8 +43,6 @@ public class LolStats {
      * 
      * 17. make the champs output alphabetical - DONE   
      * 
-     * 18. finish the outputs that come from gamemapinfo
-     * 
      * 19. in the number of teammates section, omit the "0" row if playername does not match username - DONE
      * 
      * 20. prompt to continue entering teammate stats after each teammate. that way you can have 3 teammates, but only enter stats for 2 - DONE
@@ -53,22 +51,44 @@ public class LolStats {
      * 
      * 22. make sure that the same champ cannot be entered twice for the user's team, as well as no champ twice on the enemy team - DONE
      * 
-     * 23. refactor the roles, champs, and enemy champs list to a single object, then make a list of those objects
+     * 23. refactor the roles, champs, and enemy champs list to a single object, then make a list of those objects - Will not do this
      * 
      * 24. stats sections now show alphabetized lists of champions/matchups - DONE.
      * 
      * 
      * V 0.6.0
-     * 25. instead of typing out names for stats, have the user select from a list of all players they've played with
+     * 25. instead of typing out names for general and specific stats, have the user select from a list of all players - DONE
      * 
      * 26. add the "help" option so that users can see the options again - DONE
      * 
-     * 27. when changing a username, and the entered username already exists, make sure to return the user to the change prompt, rather than the main menu. 
+     * 27. when changing a username, and the entered username already exists, make sure to return the user to the change prompt, rather than the main menu. - DONE
      *      Return the user to the main menu after three failed attempts!
      * 
-     * 28. When entering a new player, the user has three tries to get each field correct before returning them to the main menu
+     * 28. When entering a new player, the user has three tries to get each field correct before returning them to the main menu - DONE
      * 
-     * 29. When entering a new champ, the user has three tries to get each field correct before returning them to the main menu
+     * 29. When entering a new champ, the user has three tries to get each field correct before returning them to the main menu - DONE
+     * 
+     * 30. When starting a new session, if the user does not enter a valid username 3 times, the session terminates - DONE
+     * 
+     * 31. When entering a new password, if the input doesnt match three times, return the user to the main menu - DONE
+     * 
+     * 32. Specific and general stats should prompt from a list of only players the user has played with - DONE
+     * 
+     * 33. When selecting a player for specific stats, the user has 3 tries to enter valid input - DONE
+     * 
+     * 34. When selecting a player for general stats, the user has 3 tries to enter valid input - DONE
+     * 
+     * 35. When selecting a player for specific stats, output a list of all players the player has played with, then prompt the user to type out a name. - DONE
+     * 
+     * 36. When selecting a player for general stats, output a list of all players the player has played with, then prompt the user to type out a name. - DONE
+     * 
+     * 38. Users can Press Enter on specific stats to get their own stats by default - DONE
+     * 
+     * 39. Users can press Enter on general stats to get their own stats - DONE
+     * 
+     * 18. finish the outputs that come from gamemapinfo
+     * 
+     * 40. 
      * 
      */
     
@@ -872,7 +892,7 @@ public class LolStats {
             if(tries==3){
                 System.out.println("You tried unsuccessfully to enter info 3 times. Returning you to the main menu");
             }
-        }3
+        }
         
         private static void createNewChamp(){
             boolean accepted = false;
