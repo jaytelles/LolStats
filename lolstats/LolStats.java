@@ -127,18 +127,26 @@ public class LolStats {
             String username = "";
             boolean accepted = false;
             int k = 0;
+            int tries = 0;
 
-            while(!accepted){
+            while(!accepted&&tries<3){
                 System.out.print("Enter your summoner name: ");
                 username = input.nextLine();
                 
                 for(k=0; k<players.size()&&!accepted; k++){
                     if(players.get(k).getSummonerName().equalsIgnoreCase(username)){
-                        accepted = true;;
+                        accepted = true;
                     }
                 }
+                tries++;
             }
-            return players.get(k-1);
+            if(tries<=3){
+                return players.get(k-1);
+            } else {
+                System.out.println("Username not recognized. Talk to Jay for an account");
+                System.exit(0);
+                return null;
+            }
         }
         
         public static void displayOptions(Players player){
