@@ -88,7 +88,9 @@ public class LolStats {
      * 
      * 18. finish the outputs that come from gamemapinfo
      * 
-     * 40. 
+     * 40. Cant add a new player, because permissions are nonnull and not being set at saveIt() time
+     * 
+     * 41. make yes/no options have a default, so that typing isnt always necessary
      * 
      */
     
@@ -105,11 +107,11 @@ public class LolStats {
     // * 5. the prompt to continue entering teammate data is always displayed, even when the teammate entered is the lat teammate - DONE
     *       forgot to add check for that case
     * 
-    //* 6. error when exit is chosen as the first option. program execution asks for a pw then goes to player creation - probably related to permissions - DONE
-    *       added parens to the permissions check in option for adding a new player
-    * 
     //* 7. fixed error where user not notified that hte program would not work without an active internet connection.
     * 
+    * 
+    //* 6. error when exit is chosen as the first option. program execution asks for a pw then goes to player creation - probably related to permissions - DONE
+    *       added parens to the permissions check in option for adding a new player
     //* 8. Adding a user does not input the user as all lowercase - Resolved. Added a toLowerCase to the string passed to the DB
     *   Additionally, this might affect the change username function. Check and see. - It does not.
     * 
@@ -281,7 +283,7 @@ public class LolStats {
            accepted = false;
               
            while(!accepted){
-               System.out.print("Enter who got first blood[Them/Us]: ");
+               System.out.print("Enter the team that got first blood[Them/Us]: ");
                data = input.nextLine();
                data = fixInput(data);
                
@@ -424,7 +426,7 @@ public class LolStats {
             
             if(teamGotFirstBlood&&gameinfo.getKills()>0){
                 while(!accepted){
-                    System.out.print("Got First Blood[Yes/No]: ");
+                    System.out.print("Did you get First Blood[Yes/No]: ");
                     data = input.nextLine();
                     data = fixInput(data);
                     if(data.equals("Yes")||data.equals("No")){
@@ -649,7 +651,7 @@ public class LolStats {
                     gameinfo.setGotFirstBlood("Yes");
                 } else if(teamGotFirstBlood&&kills>0&&!firstBloodTaken){
                         while(!accepted){
-                            System.out.print("Got First Blood[Yes/No]: ");
+                            System.out.print("Did your teamamte get First Blood[Yes/No]: ");
                             data = input.nextLine();
                             data = fixInput(data);
                             if(data.equals("Yes")||data.equals("No")){
@@ -689,7 +691,7 @@ public class LolStats {
                     System.out.print("Continue Entry?[yes/no]: ");
                     data = input.nextLine();
                     
-                    if(data.equalsIgnoreCase("yes")){
+                    if(data.equalsIgnoreCase("yes")||data.equalsIgnoreCase("")){
                         accepted = true;
                     } else if (data.equalsIgnoreCase("no")){
                         accepted = true;
