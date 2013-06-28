@@ -91,6 +91,10 @@ public class LolStats {
      * 40. Cant add a new player, because permissions are nonnull and not being set at saveIt() time
      * 
      * 41. make yes/no options have a default, so that typing isnt always necessary
+     *      added for continuin to add teammate data
+     * 
+     * 42. add a "ranked" pick type
+     *      mod in DB, stats, and prompts
      * 
      */
     
@@ -107,7 +111,7 @@ public class LolStats {
     // * 5. the prompt to continue entering teammate data is always displayed, even when the teammate entered is the lat teammate - DONE
     *       forgot to add check for that case
     * 
-    //* 7. fixed error where user not notified that hte program would not work without an active internet connection.
+    //* 7. fixed error where user not notified that the program would not work without an active internet connection.
     * 
     * 
     //* 6. error when exit is chosen as the first option. program execution asks for a pw then goes to player creation - probably related to permissions - DONE
@@ -483,7 +487,7 @@ public class LolStats {
             }
             
             while(!accepted && gameinfo.getNumTeammates()>0){
-                System.out.print("Do you want to add stats for your teammates? [yes/no]: ");
+                System.out.print("Do you want to add stats for your teammates? [YES/no]: ");
                 data = input.nextLine();
                 if(data.equalsIgnoreCase("Yes")){
                     accepted = true;
